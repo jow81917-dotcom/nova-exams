@@ -1,0 +1,333 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+body {
+  @apply bg-background text-foreground font-sans antialiased;
+  overflow-y: scroll; /* Always show scrollbar */
+}
+
+html, body {
+  overflow-y: scroll;
+}
+
+
+html[data-scroll-locked] body,
+body[data-scroll-locked] {
+  overflow: hidden !important;
+  padding-right: 0 !important;
+  margin-right: 0 !important;
+}
+
+html, body {
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  width: 0px; 
+  background: transparent;
+}
+
+
+
+@layer base {
+  :root {
+    /* Nova Exams Color Theme */
+    --background: 0 0% 100%;
+    --foreground: 270 100% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 270 100% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 270 100% 15%;
+
+    /* Primary Yellow #FFD700 */
+    --primary: 51 100% 50%;
+    --primary-foreground: 270 100% 15%;
+
+    /* Secondary Purple #6A5ACD */
+    --secondary: 248 53% 58%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted - Neutral Light #F5F5F5 */
+    --muted: 0 0% 96%;
+    --muted-foreground: 270 30% 40%;
+
+    /* Accent Light Yellow #FFB700 */
+    --accent: 43 100% 50%;
+    --accent-foreground: 270 100% 15%;
+
+    /* Magenta #8B008B */
+    --magenta: 300 100% 27%;
+    --magenta-foreground: 0 0% 100%;
+
+    /* Indigo/Dark #4B0082 */
+    --indigo: 275 100% 25%;
+    --indigo-foreground: 0 0% 100%;
+
+    /* Teal accent for underlines */
+    --teal: 168 76% 42%;
+    --teal-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 20% 90%;
+    --input: 270 20% 90%;
+    --ring: 51 100% 50%;
+
+    --radius: 0.75rem;
+
+    /* Hero specific */
+    --hero-bg: 275 60% 24%;
+    --hero-gradient-start: 248 60% 30%;
+    --hero-gradient-end: 275 100% 25%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(51 100% 50%), hsl(43 100% 50%));
+    --gradient-secondary: linear-gradient(135deg, hsl(248 53% 58%), hsl(275 100% 25%));
+    --gradient-hero: linear-gradient(135deg, hsl(248 60% 22%), hsl(275 100% 20%));
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px hsl(270 100% 15% / 0.08);
+    --shadow-md: 0 4px 16px hsl(270 100% 15% / 0.12);
+    --shadow-lg: 0 8px 32px hsl(270 100% 15% / 0.16);
+    --shadow-glow: 0 0 30px hsl(51 100% 50% / 0.4);
+    --shadow-card: 0 10px 40px hsl(270 100% 10% / 0.2);
+  }
+
+  .dark {
+    --background: 270 100% 8%;
+    --foreground: 0 0% 96%;
+
+    --card: 270 80% 12%;
+    --card-foreground: 0 0% 96%;
+
+    --popover: 270 80% 12%;
+    --popover-foreground: 0 0% 96%;
+
+    --primary: 51 100% 50%;
+    --primary-foreground: 270 100% 15%;
+
+    --secondary: 248 53% 58%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 270 40% 20%;
+    --muted-foreground: 270 10% 70%;
+
+    --accent: 43 100% 50%;
+    --accent-foreground: 270 100% 15%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 270 40% 20%;
+    --input: 270 40% 20%;
+    --ring: 51 100% 50%;
+
+    --hero-bg: 248 60% 15%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-hero-primary {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300 bg-secondary text-secondary-foreground hover:bg-secondary/90 shadow-lg hover:shadow-xl hover:-translate-y-0.5;
+  }
+
+  .btn-hero-outline {
+    @apply px-6 py-3 rounded-lg font-semibold transition-all duration-300
+    border-2 border-teal-500 text-teal-500
+    hover:bg-teal-500 hover:text-white;
+  }
+
+
+  .floating-card {
+    @apply bg-card rounded-xl shadow-card p-3 backdrop-blur-sm;
+  }
+
+  .sparkle {
+    @apply absolute w-2 h-2 bg-primary rotate-45;
+  }
+
+  .sparkle-lg {
+    @apply absolute text-primary/60;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-primary);
+  }
+
+  .text-gradient-secondary {
+    @apply bg-clip-text text-transparent;
+    background-image: var(--gradient-secondary);
+  }
+
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+
+  .bg-gradient-secondary {
+    background-image: var(--gradient-secondary);
+  }
+
+  .bg-gradient-hero {
+    background-image: var(--gradient-hero);
+  }
+
+  .bg-hero {
+    background: hsl(var(--hero-bg));
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-delayed {
+    animation: float 6s ease-in-out infinite 2s;
+  }
+
+  .animate-float-slow {
+    animation: float 8s ease-in-out infinite 1s;
+  }
+
+  .animate-pulse-slow {
+    animation: pulse 3s ease-in-out infinite;
+  }
+
+  .animate-sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+.underline-yellow {
+  position: relative;
+  display: inline-block;
+}
+
+.underline-yellow::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0; /* start from the right */
+  width: 0%;
+  height: 4px; /* thickness */
+  background-color: #facc15; /* Tailwind yellow-400 */
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.underline-yellow:hover::after {
+  width: 100%;
+  left: 0; /* animate to the left */
+}
+@keyframes drop {
+  0% {
+    transform: translateY(-15px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* globals.css */
+.drop-char {
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.nav-link:hover .drop-char {
+  animation: drop 0.4s ease forwards;
+}
+
+@keyframes slideInQuestion {
+  0% {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-question {
+  animation: slideInQuestion 0.6s ease-out forwards;
+}
+
+
+.nav-link:hover .drop-char:nth-child(1) { animation-delay: 0s; }
+.nav-link:hover .drop-char:nth-child(2) { animation-delay: 0.05s; }
+.nav-link:hover .drop-char:nth-child(3) { animation-delay: 0.1s; }
+.nav-link:hover .drop-char:nth-child(4) { animation-delay: 0.15s; }
+.nav-link:hover .drop-char:nth-child(5) { animation-delay: 0.2s; }
+.nav-link:hover .drop-char:nth-child(6) { animation-delay: 0.25s; }
+.nav-link:hover .drop-char:nth-child(7) { animation-delay: 0.3s; }
+.nav-link:hover .drop-char:nth-child(8) { animation-delay: 0.35s; }
+
+}
+@keyframes slideIn {
+  0% {
+    transform: translateX(100px) rotate(0deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceRotate {
+  0% {
+    transform: rotate(0deg) translateY(0);
+  }
+  25% {
+    transform: rotate(-60deg) translateY(-6px);
+  }
+  50% {
+    transform: rotate(0deg) translateY(0);
+  }
+  75% {
+    transform: rotate(60deg) translateY(-6px);
+  }
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+}
+
+.animate-question {
+  display: inline-block;
+  transform-origin: center;
+  animation: 
+    slideIn 0.6s ease-out forwards,            /* initial slide */
+    bounceRotate 1s ease-in-out infinite 0.6s; /* continuous steep bounce/rotate */
+}

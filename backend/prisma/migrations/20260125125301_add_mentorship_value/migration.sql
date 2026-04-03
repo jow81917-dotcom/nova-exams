@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Exam" ADD COLUMN     "mentorshipValue" INTEGER NOT NULL DEFAULT 0,
+ALTER COLUMN "sum" DROP DEFAULT,
+ALTER COLUMN "examRoomService" DROP DEFAULT;
