@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { X, ArrowRight, CheckCircle } from "lucide-react";
-import novacertificate from "../assets/novacertificate.jpg";
 import { WireframeMesh } from "./WireframeMesh";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
@@ -123,18 +122,6 @@ export function HeroSection() {
           </div>
 
           <div className="relative hidden lg:block h-[500px]">
-  <motion.div
-    className="absolute inset-0 w-full h-full shadow-2xl"
-    animate={{ y: [0, -20, 0] }}
-    transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-  >
-    <img
-      src={novacertificate}
-      alt="Student"
-      className="w-full h-full object-contain rounded-2xl bg-white"
-    />
-  </motion.div>
-
   <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2">
     <Button
       variant="hero"
