@@ -18,6 +18,7 @@ import { useQueryClient } from "@tanstack/react-query";
 const navItems = [
   { label: "Home", path: "/" },
   { label: "About Us", path: "/about-us" },
+  { label: "Nova Practice Hub", path: "/practice" },
   { label: "Blog", path: "/blog" },
   { label: "Resources", path: "/resources" },
   { label: "Contact Us", path: "/contact-us" },
