@@ -228,6 +228,30 @@ body::-webkit-scrollbar {
     animation: sparkle 2s ease-in-out infinite;
   }
 
+.marker-underline {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+}
+
+.marker-underline::after {
+  content: "";
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0%;
+  height: 6px;
+  background: #facc15;
+  border-radius: 3px 6px 2px 5px / 4px 2px 5px 3px;
+  opacity: 0.85;
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: rotate(-0.5deg) skewX(-2deg);
+}
+
+.marker-underline:hover::after {
+  width: 100%;
+}
+
 .underline-yellow {
   position: relative;
   display: inline-block;

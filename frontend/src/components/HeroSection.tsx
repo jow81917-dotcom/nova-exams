@@ -49,12 +49,10 @@ export function HeroSection() {
               </span>
             </div>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-foreground leading-tight mb-5">
-              Seamless English
+              የProficiency ፈተናዎን ያለእንከን ይጨርሱ
               <br />
-              Proficiency <span className="text-primary">Exam Services</span> -
-              at{" "}
-              <span className="underline-yellow cursor-pointer">
-                Nova Exams
+              <span className="block text-right text-primary marker-underline cursor-pointer">
+                Nova Exam Services
               </span>
             </h1>
             <p
