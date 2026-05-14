@@ -121,24 +121,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          <div className="relative hidden lg:block h-[500px]">
-  <div className="absolute bottom-1 left-1/2 transform -translate-x-1/2">
-    <Button
-      variant="hero"
-      size="sm"
-      asChild
-      className="bg-primary/80 hover:bg-primary"
-    >
-      <a
-        href="https://credsverse.com/credentials/d10995c6-767f-4c6e-85ce-d7d153244b81"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Verify Document
-      </a>
-    </Button>
-  </div>
-</div>
+          <div className="relative hidden lg:block h-[500px]"></div>
         </div>
       </div>
     </section>
