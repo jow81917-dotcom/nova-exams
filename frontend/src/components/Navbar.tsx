@@ -95,7 +95,7 @@ export function Navbar({
             <Link
               key={item.label}
               to={item.path}
-              className="nav-link font-medium text-secondary-foreground/80 hover:text-yellow-400 transition-colors"
+              className="nav-link font-medium text-secondary-foreground/80 hover:text-primary transition-colors"
             >
               {item.label.split("").map((char, i) => (
                 <span key={i} className="drop-char">
@@ -108,10 +108,10 @@ export function Navbar({
         <div className="flex items-center gap-4">
           <button
             onClick={handleLoginClick}
-            className="hidden lg:block px-5 py-2 rounded-lg border border-secondary-foreground/30
-               bg-yellow-400 font-medium text-black
+            className="hidden lg:block px-5 py-2 rounded-lg border border-primary/40
+               bg-primary font-semibold text-primary-foreground
                transform transition-all duration-300
-               hover:bg-yellow-400/90 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-lg
+               hover:bg-accent hover:-translate-y-1 hover:-translate-x-1 hover:shadow-lg
                focus-visible:-translate-y-1 focus-visible:-translate-x-1 focus-visible:shadow-lg
                active:translate-x-0 active:translate-y-0 active:shadow-md"
           >
@@ -137,7 +137,7 @@ export function Navbar({
             <Link
               key={item.label}
               to={item.path}
-              className="block w-full nav-link font-medium text-secondary-foreground/80 hover:text-yellow-400 transition-colors"
+              className="block w-full nav-link font-medium text-secondary-foreground/80 hover:text-primary transition-colors"
             >
               {item.label.split("").map((char, i) => (
                 <span key={i} className="drop-char">
@@ -148,10 +148,10 @@ export function Navbar({
           ))}
           <button
             onClick={handleLoginClick}
-            className="mt-4 w-full px-5 py-2 rounded-lg border border-secondary-foreground/30
-                 bg-yellow-400 font-medium text-black
+            className="mt-4 w-full px-5 py-2 rounded-lg border border-primary/40
+                 bg-primary font-semibold text-primary-foreground
                  transform transition-all duration-300
-                 hover:bg-yellow-400/90 hover:-translate-y-1 hover:-translate-x-1 hover:shadow-lg
+                 hover:bg-accent hover:-translate-y-1 hover:-translate-x-1 hover:shadow-lg
                  focus-visible:-translate-y-1 focus-visible:-translate-x-1 focus-visible:shadow-lg
                  active:translate-x-0 active:translate-y-0 active:shadow-md"
           >

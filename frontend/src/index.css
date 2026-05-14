@@ -34,101 +34,101 @@ body::-webkit-scrollbar {
 
 @layer base {
   :root {
-    /* Nova Exams Color Theme */
+    /* Nova Exams Color Theme — Elegant Makeover */
     --background: 0 0% 100%;
-    --foreground: 270 100% 15%;
+    --foreground: 248 60% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 270 100% 15%;
+    --card-foreground: 248 60% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 270 100% 15%;
+    --popover-foreground: 248 60% 10%;
 
-    /* Primary Yellow #FFD700 */
-    --primary: 51 100% 50%;
-    --primary-foreground: 270 100% 15%;
+    /* Primary — Antique Gold #C9A84C */
+    --primary: 40 52% 54%;
+    --primary-foreground: 248 60% 8%;
 
-    /* Secondary Purple #6A5ACD */
-    --secondary: 248 53% 58%;
+    /* Secondary — Deep Royal Indigo #1E1560 */
+    --secondary: 248 62% 23%;
     --secondary-foreground: 0 0% 100%;
 
-    /* Muted - Neutral Light #F5F5F5 */
-    --muted: 0 0% 96%;
-    --muted-foreground: 270 30% 40%;
+    /* Muted */
+    --muted: 248 20% 96%;
+    --muted-foreground: 248 30% 40%;
 
-    /* Accent Light Yellow #FFB700 */
-    --accent: 43 100% 50%;
-    --accent-foreground: 270 100% 15%;
+    /* Accent — Warm Gold #B8922A */
+    --accent: 38 62% 44%;
+    --accent-foreground: 248 60% 8%;
 
-    /* Magenta #8B008B */
-    --magenta: 300 100% 27%;
+    /* Magenta */
+    --magenta: 300 100% 20%;
     --magenta-foreground: 0 0% 100%;
 
-    /* Indigo/Dark #4B0082 */
-    --indigo: 275 100% 25%;
+    /* Indigo/Dark #0F0A2E */
+    --indigo: 248 70% 12%;
     --indigo-foreground: 0 0% 100%;
 
-    /* Teal accent for underlines */
-    --teal: 168 76% 42%;
+    /* Teal accent */
+    --teal: 168 60% 32%;
     --teal-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 270 20% 90%;
-    --input: 270 20% 90%;
-    --ring: 51 100% 50%;
+    --border: 248 30% 88%;
+    --input: 248 30% 88%;
+    --ring: 40 52% 54%;
 
     --radius: 0.75rem;
 
-    /* Hero specific */
-    --hero-bg: 275 60% 24%;
-    --hero-gradient-start: 248 60% 30%;
-    --hero-gradient-end: 275 100% 25%;
+    /* Hero specific — deep navy-indigo */
+    --hero-bg: 248 65% 10%;
+    --hero-gradient-start: 248 62% 14%;
+    --hero-gradient-end: 258 70% 10%;
 
     /* Gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(51 100% 50%), hsl(43 100% 50%));
-    --gradient-secondary: linear-gradient(135deg, hsl(248 53% 58%), hsl(275 100% 25%));
-    --gradient-hero: linear-gradient(135deg, hsl(248 60% 22%), hsl(275 100% 20%));
+    --gradient-primary: linear-gradient(135deg, hsl(40 52% 54%), hsl(38 62% 40%));
+    --gradient-secondary: linear-gradient(135deg, hsl(248 55% 28%), hsl(258 70% 12%));
+    --gradient-hero: linear-gradient(135deg, hsl(248 62% 12%), hsl(258 70% 8%));
 
     /* Shadows */
-    --shadow-sm: 0 2px 8px hsl(270 100% 15% / 0.08);
-    --shadow-md: 0 4px 16px hsl(270 100% 15% / 0.12);
-    --shadow-lg: 0 8px 32px hsl(270 100% 15% / 0.16);
-    --shadow-glow: 0 0 30px hsl(51 100% 50% / 0.4);
-    --shadow-card: 0 10px 40px hsl(270 100% 10% / 0.2);
+    --shadow-sm: 0 2px 8px hsl(248 60% 10% / 0.10);
+    --shadow-md: 0 4px 16px hsl(248 60% 10% / 0.14);
+    --shadow-lg: 0 8px 32px hsl(248 60% 10% / 0.18);
+    --shadow-glow: 0 0 35px hsl(40 52% 54% / 0.35);
+    --shadow-card: 0 10px 40px hsl(248 60% 8% / 0.22);
   }
 
   .dark {
-    --background: 270 100% 8%;
+    --background: 248 65% 6%;
     --foreground: 0 0% 96%;
 
-    --card: 270 80% 12%;
+    --card: 248 60% 10%;
     --card-foreground: 0 0% 96%;
 
-    --popover: 270 80% 12%;
+    --popover: 248 60% 10%;
     --popover-foreground: 0 0% 96%;
 
-    --primary: 51 100% 50%;
-    --primary-foreground: 270 100% 15%;
+    --primary: 40 52% 54%;
+    --primary-foreground: 248 60% 8%;
 
-    --secondary: 248 53% 58%;
+    --secondary: 248 55% 28%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 270 40% 20%;
-    --muted-foreground: 270 10% 70%;
+    --muted: 248 40% 16%;
+    --muted-foreground: 248 10% 70%;
 
-    --accent: 43 100% 50%;
-    --accent-foreground: 270 100% 15%;
+    --accent: 38 62% 44%;
+    --accent-foreground: 248 60% 8%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 270 40% 20%;
-    --input: 270 40% 20%;
-    --ring: 51 100% 50%;
+    --border: 248 40% 18%;
+    --input: 248 40% 18%;
+    --ring: 40 52% 54%;
 
-    --hero-bg: 248 60% 15%;
+    --hero-bg: 248 65% 8%;
   }
 }
 
@@ -241,9 +241,9 @@ body::-webkit-scrollbar {
   left: 0;
   width: 0%;
   height: 6px;
-  background: #facc15;
+  background: #C9A84C;
   border-radius: 3px 6px 2px 5px / 4px 2px 5px 3px;
-  opacity: 0.85;
+  opacity: 0.90;
   transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform: rotate(-0.5deg) skewX(-2deg);
 }
@@ -264,7 +264,7 @@ body::-webkit-scrollbar {
   right: 0; /* start from the right */
   width: 0%;
   height: 4px; /* thickness */
-  background-color: #facc15; /* Tailwind yellow-400 */
+  background-color: #C9A84C; /* Antique Gold */
   transition: width 0.3s ease, left 0.3s ease;
 }
 
