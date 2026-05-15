@@ -1,3 +1,4 @@
+import { ExamTicker } from "./ExamTicker";
 import { useState } from "react";
 import { X, ArrowRight, CheckCircle } from "lucide-react";
 import { WireframeMesh } from "./WireframeMesh";
@@ -149,6 +150,7 @@ export function HeroSection() {
           </motion.div>
         </div>
       </div>
+      <ExamTicker />
     </section>
   );
 }
