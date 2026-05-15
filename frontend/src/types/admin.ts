@@ -24,7 +24,9 @@ export interface BlogPost {
   author: string;    
   excerpt: string;   
   date: string;       
-  readTime?: string;  
+  readTime?: string;
+  imageUrl?: string;
+  imagePosition?: "top" | "middle" | "bottom";
 }
 
 export interface Resource {

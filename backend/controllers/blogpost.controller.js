@@ -10,6 +10,8 @@ exports.createBlogPost = async (req, res) => {
         author: req.body.author,
         date: req.body.date ? new Date(req.body.date) : new Date(),
         readTime: req.body.readTime,
+        imageUrl: req.body.imageUrl || null,
+        imagePosition: req.body.imagePosition || "top",
       },
     });
 
@@ -84,6 +86,8 @@ exports.updateBlogPost = async (req, res) => {
         author: req.body.author,
         date: req.body.date ? new Date(req.body.date) : undefined,
         readTime: req.body.readTime,
+        imageUrl: req.body.imageUrl !== undefined ? req.body.imageUrl : undefined,
+        imagePosition: req.body.imagePosition !== undefined ? req.body.imagePosition : undefined,
       },
     });
 
