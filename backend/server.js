@@ -5,6 +5,7 @@ const blogRoutes = require("./routes/blogpost.routes");
 const resourceRoutes = require("./routes/resource.routes");
 const adminRoutes = require("./routes/admin.routes");
 const teamRoutes = require("./routes/team.routes");
+const prisma = require("./prisma/client");
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,      
@@ -43,16 +44,26 @@ app.use("/api/resources", resourceRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/team", teamRoutes);
 
-
 app.get("/", (req, res) => {
   res.send("Service is alive!");
 });
 
+async function ensureBlogColumns() {
+  try {
+    await prisma.$executeRawUnsafe(`ALTER TABLE "BlogPost" ADD COLUMN IF NOT EXISTS "imageUrl" TEXT`);
+    await prisma.$executeRawUnsafe(`ALTER TABLE "BlogPost" ADD COLUMN IF NOT EXISTS "imagePosition" TEXT DEFAULT 'top'`);
+    console.log("BlogPost columns ensured.");
+  } catch (err) {
+    console.error("Column migration error:", err.message);
+  }
+}
+
 const PORT = process.env.PORT || 5000;
 const BACKEND_URL = process.env.BACKEND_URL; 
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`Server running on port ${PORT}`);
+  await ensureBlogColumns();
 
   setInterval(() => {
     axios.get(BACKEND_URL)
