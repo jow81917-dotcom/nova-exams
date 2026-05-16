@@ -81,10 +81,21 @@ const BlogPostsSection = () => {
     const formData = new FormData(form);
     formData.set("imagePosition", imagePosition);
 
-    // If no new file selected and editing, keep existing imageUrl
+    // Remove empty image field so multer doesn't get confused
     const fileInput = fileInputRef.current;
-    if (editingBlog && (!fileInput?.files || fileInput.files.length === 0)) {
-      formData.set("imageUrl", editingBlog.imageUrl || "");
+    const hasNewFile = fileInput?.files && fileInput.files.length > 0;
+    if (!hasNewFile) {
+      formData.delete("image");
+      // preserve existing imageUrl when editing
+      if (editingBlog?.imageUrl) {
+        formData.set("imageUrl", editingBlog.imageUrl);
+      }
+    }
+
+    // Ensure date is valid ISO string
+    const rawDate = formData.get("date") as string;
+    if (rawDate) {
+      formData.set("date", new Date(rawDate).toISOString());
     }
 
     if (editingBlog) {

@@ -4,30 +4,31 @@ const cloudinary = require("../lib/cloudinary");
 
 exports.createBlogPost = async (req, res) => {
   try {
-    let imageUrl = req.body.imageUrl || null;
-    let imagePublicId = null;
+    let imageUrl = null;
 
     if (req.file) {
       const result = await uploadToCloudinary(req.file.buffer, req.file.mimetype, "nova-exams/blogs", req.file.originalname);
       imageUrl = result.secure_url;
-      imagePublicId = result.public_id;
+    } else if (req.body.imageUrl) {
+      imageUrl = req.body.imageUrl;
     }
 
-    const blogPost = await prisma.blogPost.create({
-      data: {
-        title: req.body.title,
-        excerpt: req.body.excerpt,
-        category: req.body.category,
-        author: req.body.author,
-        date: req.body.date ? new Date(req.body.date) : new Date(),
-        readTime: req.body.readTime,
-        imageUrl,
-        imagePosition: req.body.imagePosition || "top",
-      },
-    });
+    const data = {
+      title: req.body.title,
+      excerpt: req.body.excerpt,
+      category: req.body.category,
+      author: req.body.author,
+      date: req.body.date ? new Date(req.body.date) : new Date(),
+      readTime: req.body.readTime || null,
+    };
 
+    if (imageUrl) data.imageUrl = imageUrl;
+    if (req.body.imagePosition) data.imagePosition = req.body.imagePosition;
+
+    const blogPost = await prisma.blogPost.create({ data });
     res.status(201).json({ success: true, message: "Blog post created successfully", data: blogPost });
   } catch (error) {
+    console.error("createBlogPost error:", error.message);
     res.status(500).json({ success: false, message: "Failed to create blog post", error: error.message });
   }
 };
@@ -80,29 +81,35 @@ exports.getBlogPost = async (req, res) => {
 
 exports.updateBlogPost = async (req, res) => {
   try {
-    let imageUrl = req.body.imageUrl !== undefined ? req.body.imageUrl : undefined;
+    let imageUrl = undefined;
 
     if (req.file) {
       const result = await uploadToCloudinary(req.file.buffer, req.file.mimetype, "nova-exams/blogs", req.file.originalname);
       imageUrl = result.secure_url;
+    } else if (req.body.imageUrl !== undefined) {
+      imageUrl = req.body.imageUrl;
     }
+
+    const data = {
+      title: req.body.title,
+      excerpt: req.body.excerpt,
+      category: req.body.category,
+      author: req.body.author,
+      date: req.body.date ? new Date(req.body.date) : undefined,
+      readTime: req.body.readTime || null,
+    };
+
+    if (imageUrl !== undefined) data.imageUrl = imageUrl;
+    if (req.body.imagePosition) data.imagePosition = req.body.imagePosition;
 
     const blogPost = await prisma.blogPost.update({
       where: { id: req.params.id },
-      data: {
-        title: req.body.title,
-        excerpt: req.body.excerpt,
-        category: req.body.category,
-        author: req.body.author,
-        date: req.body.date ? new Date(req.body.date) : undefined,
-        readTime: req.body.readTime,
-        ...(imageUrl !== undefined && { imageUrl }),
-        imagePosition: req.body.imagePosition !== undefined ? req.body.imagePosition : undefined,
-      },
+      data,
     });
 
     res.json({ success: true, message: "Blog post updated successfully", data: blogPost });
   } catch (error) {
+    console.error("updateBlogPost error:", error.message);
     res.status(500).json({ success: false, message: "Failed to update blog post", error: error.message });
   }
 };
