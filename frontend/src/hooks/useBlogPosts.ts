@@ -15,8 +15,11 @@ export function useBlogPosts() {
 export function useAddBlogPost() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async (blogData: Partial<BlogPost>) => {
-      const res = await api.post("/blogs", blogData);
+    mutationFn: async (blogData: FormData | Partial<BlogPost>) => {
+      const isFormData = blogData instanceof FormData;
+      const res = await api.post("/blogs", blogData, {
+        headers: isFormData ? { "Content-Type": "multipart/form-data" } : {},
+      });
       return res.data.data;
     },
     onSuccess: () => {
@@ -28,14 +31,11 @@ export function useAddBlogPost() {
 export function useUpdateBlogPost() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: async ({
-      id,
-      blogData,
-    }: {
-      id: string;
-      blogData: Partial<BlogPost>;
-    }) => {
-      const res = await api.patch(`/blogs/${id}`, blogData);
+    mutationFn: async ({ id, blogData }: { id: string; blogData: FormData | Partial<BlogPost> }) => {
+      const isFormData = blogData instanceof FormData;
+      const res = await api.patch(`/blogs/${id}`, blogData, {
+        headers: isFormData ? { "Content-Type": "multipart/form-data" } : {},
+      });
       return res.data.data;
     },
     onSuccess: () => {

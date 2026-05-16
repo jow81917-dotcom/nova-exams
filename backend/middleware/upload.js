@@ -6,7 +6,7 @@ const storage = multer.memoryStorage();
 const fileFilter = (req, file, cb) => {
   const url = req.originalUrl.toLowerCase();
 
-  if (url.includes("testimonials") || url.includes("team")) {
+  if (url.includes("testimonials") || url.includes("team") || url.includes("blogs")) {
     if (file.mimetype.startsWith("image/")) {
       cb(null, true);
     } else {
