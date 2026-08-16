@@ -43,12 +43,6 @@ export function HeroSection() {
       <div className="container mx-auto px-4 pt-12 lg:pt-20 pb-32 lg:pb-40">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="relative z-10">
-            <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-primary/20 border border-primary/40 mb-4 animate-fade-in mt-10 shadow-sm">
-              <CheckCircle className="w-5 h-5 text-primary shrink-0" />
-              <span className="text-primary font-semibold text-base">
-                Registered by Startup Ethiopia (MInT)
-              </span>
-            </div>
             <h1 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-secondary-foreground leading-tight mb-5">
               የProficiency ፈተናዎን ያለእንከን ይጨርሱ
               <br />
@@ -118,6 +112,21 @@ export function HeroSection() {
                   </div>
                 </div>
               ))}
+            </div>
+
+            <div className="flex flex-wrap gap-3 mt-6 animate-fade-in">
+              <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/20 border border-white/30 shadow-sm">
+                <CheckCircle className="w-5 h-5 text-white shrink-0" />
+                <span className="text-white font-semibold text-base">
+                  Registered by Startup Ethiopia (MInT)
+                </span>
+              </div>
+              <div className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/20 border border-white/30 shadow-sm">
+                <CheckCircle className="w-5 h-5 text-white shrink-0" />
+                <span className="text-white font-semibold text-base">
+                  Official IELTS Registration Centre for British Council
+                </span>
+              </div>
             </div>
           </div>
 
