@@ -31,10 +31,11 @@ exports.loginAdmin = async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    const isProd = process.env.NODE_ENV === "production";
     res.cookie("adminToken", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
       maxAge: 60 * 60 * 1000,
     });
 
@@ -71,10 +72,11 @@ exports.getSession = (req, res) => {
 
 exports.logoutAdmin = async (req, res) => {
   try {
+    const isProd = process.env.NODE_ENV === "production";
     res.clearCookie("adminToken", {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "none",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
     });
     return res
       .status(200)
