@@ -1,11 +1,12 @@
+require("dotenv").config();
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 
 const prisma = new PrismaClient();
 
 async function main() {
-  const name = process.env.ADMIN_NAME;
-  const email = process.env.ADMIN_EMAIL;
+  const name = (process.env.ADMIN_NAME || "Nova Admin").trim();
+  const email = process.env.ADMIN_EMAIL?.trim().toLowerCase();
   const password = process.env.ADMIN_PASSWORD;
 
   if (!name || !email || !password) {
@@ -27,7 +28,7 @@ async function main() {
     },
   });
 
-  console.log("✅ Admin seeded:", { id: admin.id, name: admin.name, email: admin.email });
+  console.log("✅ Admin seeded successfully:", { id: admin.id, name: admin.name, email: admin.email });
 }
 
 main()

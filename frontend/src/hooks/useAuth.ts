@@ -17,10 +17,21 @@ export function useLogin() {
 
   return useMutation({
     mutationFn: async (data: { email: string; password: string }) => {
-      const res = await api.post("/admin/login", data);
+      const res = await api.post("/admin/login", {
+        email: data.email.trim().toLowerCase(),
+        password: data.password,
+      });
       return res.data;
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+      if (data?.user) {
+        queryClient.setQueryData(["session"], {
+          id: data.user.id,
+          email: data.user.email,
+          name: data.user.name,
+          isAdmin: true,
+        });
+      }
       queryClient.invalidateQueries({ queryKey: ["session"] });
     },
   });

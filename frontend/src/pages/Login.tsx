@@ -29,17 +29,16 @@ const Login = () => {
       const res = await login({ email, password });
       if (res.success) {
         toast.success("Login successful");
-        queryClient.setQueryData(["session"], {
-          id: res.user?.id,
-          email: res.user?.email,
-          isAdmin: true,
-        });
         navigate("/admin");
       } else {
-        toast.error("Invalid credentials");
+        toast.error(res.message || "Invalid credentials");
       }
-    } catch {
-      toast.error("Login failed");
+    } catch (err: any) {
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Login failed. Please check your credentials.";
+      toast.error(msg);
     }
   };
 

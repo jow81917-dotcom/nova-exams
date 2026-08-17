@@ -52,17 +52,16 @@ export function Navbar({ bgColor = "bg-[hsl(var(--hero-bg))]/70" }: NavbarProps)
         setIsLoginOpen(false);
         setEmail("");
         setPassword("");
-        queryClient.setQueryData(["session"], {
-          id: res.user?.id,
-          email: res.user?.email,
-          isAdmin: true,
-        });
         navigate("/admin");
       } else {
-        toast.error("Invalid Credential");
+        toast.error(res.message || "Invalid credentials");
       }
-    } catch {
-      toast.error("Login failed");
+    } catch (err: any) {
+      const msg =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Login failed. Please check your credentials.";
+      toast.error(msg);
     }
   };
 

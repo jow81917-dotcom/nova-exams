@@ -53,9 +53,11 @@ const BACKEND_URL = process.env.BACKEND_URL;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 
-  setInterval(() => {
-    axios.get(BACKEND_URL)
-      .then(() => console.log(`Pinged backend url to stay awake`))
-      .catch(err => console.error("Ping failed:", err.message));
-  }, 14 * 60 * 1000);
+  if (BACKEND_URL) {
+    setInterval(() => {
+      axios.get(BACKEND_URL)
+        .then(() => console.log(`Pinged backend url to stay awake`))
+        .catch(err => console.error("Ping failed:", err.message));
+    }, 14 * 60 * 1000);
+  }
 });
