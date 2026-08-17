@@ -7,7 +7,7 @@ export function useTestimonials() {
     queryKey: ["testimonials"],
     queryFn: async () => {
       const res = await api.get("/testimonials");
-      return res.data.data;
+      return res.data?.data ?? [];
     },
   });
 }

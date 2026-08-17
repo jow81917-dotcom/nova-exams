@@ -6,7 +6,7 @@ export function useSession() {
     queryKey: ["session"],
     queryFn: async () => {
       const res = await api.get("/admin/session");
-      return res.data.user; // { id, email, isAdmin }
+      return res.data?.user ?? null;
     },
     retry: false, // don't spam retries if not logged in
   });

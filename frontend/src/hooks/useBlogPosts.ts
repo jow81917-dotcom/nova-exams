@@ -7,7 +7,7 @@ export function useBlogPosts() {
     queryKey: ["blogs"],
     queryFn: async () => {
       const res = await api.get("/blogs");
-      return res.data.data;
+      return res.data?.data ?? [];
     },
   });
 }

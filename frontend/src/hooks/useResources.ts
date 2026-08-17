@@ -7,7 +7,7 @@ export function useResources() {
     queryKey: ["resources"],
     queryFn: async () => {
       const res = await api.get("/resources");
-      return res.data.data;
+      return res.data?.data ?? [];
     },
   });
 }

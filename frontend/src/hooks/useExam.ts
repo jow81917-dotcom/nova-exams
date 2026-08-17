@@ -6,7 +6,7 @@ export function useExams() {
     queryKey: ["exams"],
     queryFn: async () => {
       const res = await api.get("/exams");
-      return res.data.data;
+      return res.data?.data ?? [];
     },
   });
 }

@@ -16,7 +16,7 @@ const Blog = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
   const { data: posts = [], isLoading, error } = useBlogPosts();
-  const categories = ["All", ...new Set(posts.map((p) => p.category))];
+  const categories = ["All", ...(Array.isArray(posts) ? posts.map((p) => p.category) : [])];
 
   const filteredPosts = posts.filter((post) => {
     const term = search.trim().toLowerCase();

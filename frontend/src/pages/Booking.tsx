@@ -144,7 +144,7 @@ const Booking = () => {
                       <div className="flex items-center justify-center min-h-[400px] col-span-full">
                         <Loader2 className="w-8 h-8 animate-spin text-secondary" />
                       </div>
-                    ) : (
+                    ) : exams && exams.length > 0 ? (
                       exams.map((exam: Exam) => (
                         <Card
                           key={exam.id}
@@ -184,6 +184,14 @@ const Booking = () => {
                           </CardContent>
                         </Card>
                       ))
+                    ) : isError ? (
+                      <div className="flex items-center justify-center min-h-[200px] col-span-full text-muted-foreground">
+                        Failed to load exams. Please check your connection.
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center min-h-[200px] col-span-full text-muted-foreground">
+                        No exams available at this time.
+                      </div>
                     )}
                   </div>
                 </div>

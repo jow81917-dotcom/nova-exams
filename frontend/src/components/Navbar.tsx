@@ -77,15 +77,15 @@ export function Navbar({ bgColor = "bg-[hsl(var(--hero-bg))]/70" }: NavbarProps)
   return (
     <nav className={`fixed top-0 left-0 right-0 z-50 ${bgColor} backdrop-blur-md border-b border-white/5`}>
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-[72px]">
 
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3 shrink-0">
-            <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center">
-              <img src={navLogo} alt="Nova Exams Logo" className="w-6 h-6" />
+            <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center">
+              <img src={navLogo} alt="Nova Exam Services Logo" className="w-6 h-6" />
             </div>
-            <span className="text-secondary-foreground font-display font-bold text-lg tracking-tight">
-              <span className="text-primary">Nova </span>Exams
+            <span className="text-secondary-foreground font-display font-bold text-base tracking-tight">
+              <span className="text-primary">Nova Exam Services</span>
             </span>
           </Link>
 
