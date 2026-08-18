@@ -11,7 +11,7 @@ export default function PracticeHub() {
           title="Nova Practice Hub"
           className="w-full h-[calc(100vh-72px)]"
           style={{ border: "none" }}
-          allow="fullscreen"
+          allow="fullscreen; microphone; camera"
         />
       </main>
       <Footer />
