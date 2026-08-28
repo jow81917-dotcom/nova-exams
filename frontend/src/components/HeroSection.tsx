@@ -131,25 +131,30 @@ export function HeroSection() {
           </div>
 
           <motion.div
-            className="relative hidden lg:flex h-[500px] items-center justify-center"
+            className="relative hidden lg:flex min-h-[560px] items-center justify-center px-2"
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.3 }}
           >
             {/* Decorative glow behind image */}
-            <div className="absolute inset-8 rounded-2xl bg-primary/20 blur-2xl" />
+            <div className="absolute inset-4 rounded-[2rem] bg-primary/25 blur-3xl" />
+            <div className="absolute inset-x-0 top-1/2 h-3/4 -translate-y-1/2 rounded-[2rem] border border-primary/20 bg-secondary/10 rotate-3" />
 
             {/* Corner accents */}
-            <span className="absolute top-4 left-4 text-primary/50 text-3xl select-none">✦</span>
-            <span className="absolute bottom-4 right-4 text-primary/50 text-3xl select-none">✦</span>
+            <span className="absolute top-8 left-0 text-primary/60 text-4xl select-none">✦</span>
+            <span className="absolute bottom-8 right-0 text-primary/60 text-4xl select-none">✦</span>
 
             {/* Image frame */}
-            <div className="group relative z-10 aspect-[1200/630] rounded-2xl border-2 border-primary/40 shadow-[0_0_40px_rgba(var(--primary-rgb),0.25)] overflow-hidden w-[90%]">
+            <div className="group relative z-10 w-full max-w-[700px] aspect-[1200/630] rounded-[1.35rem] border-2 border-primary/60 bg-background/20 p-1.5 shadow-[0_0_55px_rgba(var(--primary-rgb),0.32)] transition-transform duration-500 hover:-translate-y-1">
               <img
                 src="/nova-exam-services-staff.png"
                 alt="Nova Exam Services staff"
-                className="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
+                className="h-full w-full rounded-[0.9rem] object-cover transition-transform duration-500 ease-out group-hover:scale-110"
               />
+              <div className="absolute -bottom-5 left-6 rounded-xl border border-primary/40 bg-secondary/90 px-4 py-2.5 shadow-xl backdrop-blur-md">
+                <p className="text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-primary">Your exam success team</p>
+                <p className="mt-0.5 text-sm font-medium text-secondary-foreground">Guidance from registration to results</p>
+              </div>
             </div>
           </motion.div>
         </div>
