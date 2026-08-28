@@ -144,16 +144,11 @@ export function HeroSection() {
             <span className="absolute bottom-4 right-4 text-primary/50 text-3xl select-none">✦</span>
 
             {/* Image frame */}
-            <div className="relative z-10 rounded-2xl border-2 border-primary/40 shadow-[0_0_40px_rgba(var(--primary-rgb),0.25)] overflow-hidden w-[90%]">
-              {/* Top label bar */}
-              <div className="bg-primary/20 backdrop-blur-sm px-4 py-2 flex items-center gap-2 border-b border-primary/30">
-                <CheckCircle className="w-4 h-4 text-primary" />
-                <span className="text-primary text-xs font-semibold tracking-wide uppercase">Internationally Recognised Framework</span>
-              </div>
+            <div className="group relative z-10 aspect-[1200/630] rounded-2xl border-2 border-primary/40 shadow-[0_0_40px_rgba(var(--primary-rgb),0.25)] overflow-hidden w-[90%]">
               <img
-                src="https://evalground.com/blog/wp-content/uploads/2018/03/CEFR-1-e1584558768759.jpg"
-                alt="CEFR Language Framework"
-                className="w-full object-cover"
+                src="/nova-exam-services-staff.png"
+                alt="Nova Exam Services staff"
+                className="w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
               />
             </div>
           </motion.div>
