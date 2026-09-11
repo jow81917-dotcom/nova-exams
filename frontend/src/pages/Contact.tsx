@@ -18,6 +18,7 @@ import {
 import { useState } from "react";
 import { useToast } from "../hooks/use-toast";
 import { motion } from "framer-motion";
+import { api } from "@/lib/api";
 const contactInfo = [
   { icon: Mail, label: "Email", value: "astronomer291@gmail.com" },
   { icon: Phone, label: "Phone", value: "+251 949700013" },
@@ -33,15 +34,28 @@ const Contact = () => {
     subject: "",
     message: "",
   });
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description:
-        "Thank you for reaching out to us. We appreciate your message!",
-    });
+  const [isSending, setIsSending] = useState(false);
 
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSending(true);
+
+    try {
+      await api.post("/contact", formData);
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for reaching out to us. We appreciate your message!",
+      });
+      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+    } catch (error: any) {
+      toast({
+        title: "Message Not Sent",
+        description: error?.response?.data?.message || "Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
   return (
     <div className="bg-background overflow-x-hidden">
@@ -207,6 +221,7 @@ const Contact = () => {
                               })
                             }
                             placeholder="Your phone"
+                            required
                           />{" "}
                         </div>{" "}
                         <div>
@@ -257,9 +272,9 @@ const Contact = () => {
                           variant="cta"
                           size="lg"
                           className="w-full"
+                          disabled={isSending}
                         >
-                          {" "}
-                          Send Message{" "}
+                          {isSending ? "Sending..." : "Send Message"}
                         </Button>{" "}
                       </motion.div>{" "}
                     </form>{" "}

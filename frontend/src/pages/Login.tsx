@@ -36,7 +36,9 @@ const Login = () => {
     } catch (err: any) {
       const msg =
         err?.response?.data?.message ||
-        err?.message ||
+        (err?.message === "Network Error"
+          ? "Network error: the backend is unreachable or CORS is blocking the request. Check the API URL and backend settings."
+          : err?.message) ||
         "Login failed. Please check your credentials.";
       toast.error(msg);
     }

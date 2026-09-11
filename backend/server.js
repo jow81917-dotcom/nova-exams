@@ -5,11 +5,15 @@ const blogRoutes = require("./routes/blogpost.routes");
 const resourceRoutes = require("./routes/resource.routes");
 const adminRoutes = require("./routes/admin.routes");
 const teamRoutes = require("./routes/team.routes");
+const contactRoutes = require("./routes/contact.routes");
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
-  "http://localhost:3000"
-];
+  "http://localhost:3000",
+  "http://localhost:5173",
+  "http://127.0.0.1:3000",
+  "http://127.0.0.1:5173"
+].filter(Boolean);
 
 const express = require("express");
 const cookieParser = require("cookie-parser");
@@ -42,6 +46,7 @@ app.use("/api/blogs", blogRoutes);
 app.use("/api/resources", resourceRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/team", teamRoutes);
+app.use("/api/contact", contactRoutes);
 
 app.get("/", (req, res) => {
   res.send("Service is alive!");
