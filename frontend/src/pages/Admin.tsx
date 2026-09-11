@@ -19,6 +19,7 @@ import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { api } from "@/lib/api";
 
 const Admin = () => {
   const navigate = useNavigate();
@@ -91,6 +92,33 @@ const Admin = () => {
       newPassword: "",
     });
   };
+
+  const [telegramStatus, setTelegramStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const handleTelegramTest = async () => {
+    setTelegramStatus("loading");
+
+    try {
+      const response = await api.post("/telegram/test", {
+        message: "🔔 NOVA EXAMS\n\nTelegram integration test successful.\n\nWebsite → Backend → Telegram Bot\n\nThe Nova Exams website is successfully connected to the Telegram bot.",
+      });
+
+      if (response.data?.success) {
+        setTelegramStatus("success");
+        toast.success("Telegram message sent successfully");
+      } else {
+        setTelegramStatus("error");
+        toast.error(response.data?.message || "Telegram test failed");
+      }
+    } catch (error: any) {
+      setTelegramStatus("error");
+      const msg =
+        error?.response?.data?.message ||
+        "Telegram test failed. Please check the backend configuration.";
+      toast.error(msg);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background relative">
       <div className="absolute top-4 right-4 z-50">
@@ -176,6 +204,26 @@ const Admin = () => {
               <TeamSection />
             </TabsContent>
           </Tabs>
+        </div>
+        <div className="mb-10 p-6 border rounded-lg bg-card shadow-sm">
+          <h2 className="text-xl font-semibold mb-4">Telegram Integration</h2>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <p className="text-sm text-muted-foreground mb-1">Status</p>
+              <p className="font-medium text-foreground">
+                {telegramStatus === "success"
+                  ? "Connected"
+                  : telegramStatus === "error"
+                    ? "Connection issue"
+                    : telegramStatus === "loading"
+                      ? "Sending..."
+                      : "Not tested yet"}
+              </p>
+            </div>
+            <Button onClick={handleTelegramTest} disabled={telegramStatus === "loading"} className="bg-primary">
+              {telegramStatus === "loading" ? "Sending..." : "Send Test Message"}
+            </Button>
+          </div>
         </div>
         <div className="mb-10 p-6 border rounded-lg bg-card shadow-sm">
           <h2 className="text-xl font-semibold mb-4">Update Profile</h2>

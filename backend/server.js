@@ -6,6 +6,7 @@ const resourceRoutes = require("./routes/resource.routes");
 const adminRoutes = require("./routes/admin.routes");
 const teamRoutes = require("./routes/team.routes");
 const contactRoutes = require("./routes/contact.routes");
+const telegramRoutes = require("./routes/telegram.routes");
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
@@ -47,6 +48,7 @@ app.use("/api/resources", resourceRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/contact", contactRoutes);
+app.use("/api/telegram", telegramRoutes);
 
 app.get("/", (req, res) => {
   res.send("Service is alive!");
