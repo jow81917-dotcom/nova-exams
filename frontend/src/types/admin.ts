@@ -1,10 +1,19 @@
+export interface MentorshipOption {
+  id?: string;
+  type: string;
+  value: number;
+  name?: string;
+}
+
 export interface Exam {
   id: string;
   examType: "Duolingo" | "TOEFL" | "Pearson" | "IELTS Home" | "Others";
-  mentorship: string;        
-  mentorshipValue: number;   
-  examRoomService: number;
-  sum: number;
+  mentorship?: string;
+  mentorshipValue?: number;
+  mentorshipOptions?: MentorshipOption[];
+  examPrice?: number;
+  examRoomService?: number;
+  sum?: number;
 }
 
 export interface Testimonial {

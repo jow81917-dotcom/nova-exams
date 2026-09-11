@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useExams } from "../hooks/useExam";
-import { Checkbox } from "@/components/ui/checkbox";
 import { ConsultationBooking } from "@/components/ConsultationBooking";
 import { ChatBot } from "@/components/ChatBot";
 import { TelegramButton } from "@/components/TelegramButton";
@@ -25,6 +24,8 @@ export interface Exam {
   description: string;
   mentorship?: string;
   mentorshipValue?: number;
+  mentorshipOptions?: { type: string; value: number }[];
+  examPrice?: number;
   examRoomService?: number;
   basePrice?: number;
   sum?: number;
@@ -33,20 +34,41 @@ export interface Exam {
 const Booking = () => {
   const { toast } = useToast();
   const [selectedExam, setSelectedExam] = useState<string | null>(null);
-  const [wantsMentorship, setWantsMentorship] = useState(false);
+  const [selectedMentorship, setSelectedMentorship] = useState<string>("");
   const [step, setStep] = useState(1);
 
   const { data: exams, isLoading, isError } = useExams();
 
   const selectedExamData = exams?.find((e: Exam) => e.id === selectedExam);
 
+  const mentorshipOptions = useMemo(() => {
+    if (selectedExamData?.mentorshipOptions?.length) {
+      return selectedExamData.mentorshipOptions;
+    }
+
+    if (selectedExamData?.mentorship) {
+      return [{
+        type: selectedExamData.mentorship,
+        value: selectedExamData.mentorshipValue ?? 0,
+      }];
+    }
+
+    return [];
+  }, [selectedExamData]);
+
+  const selectedMentorshipValue =
+    mentorshipOptions.find((option) => option.type === selectedMentorship)?.value ??
+    mentorshipOptions[0]?.value ??
+    0;
+
   const isOthersExam =
     selectedExamData?.examType?.toLowerCase() === "others" ||
     selectedExamData?.examType?.toLowerCase() === "other";
 
   const totalPrice = selectedExamData
-    ? (selectedExamData.basePrice ?? selectedExamData.sum ?? 0) +
-      (wantsMentorship ? (selectedExamData.mentorshipValue ?? 0) : 0)
+    ? (selectedExamData.examPrice ?? selectedExamData.basePrice ?? selectedExamData.sum ?? 0) +
+      (selectedExamData.examRoomService ?? 0) +
+      selectedMentorshipValue
     : 0;
 
   const handleProceed = () => {
@@ -65,6 +87,9 @@ const Booking = () => {
     }
 
     if (step === 2 && !isOthersExam) {
+      if (mentorshipOptions.length > 0 && !selectedMentorship) {
+        setSelectedMentorship(mentorshipOptions[0].type);
+      }
       setStep(3);
       return;
     }
@@ -153,7 +178,12 @@ const Booking = () => {
                               ? "border-secondary ring-2 ring-secondary"
                               : "border-border hover:border-secondary/50"
                           }`}
-                          onClick={() => setSelectedExam(exam.id)}
+                          onClick={() => {
+                            setSelectedExam(exam.id);
+                            setSelectedMentorship(
+                              exam.mentorshipOptions?.[0]?.type ?? exam.mentorship ?? ""
+                            );
+                          }}
                         >
                           <CardHeader className="pb-2">
                             <div className="flex items-center justify-between">
@@ -170,16 +200,16 @@ const Booking = () => {
                           </CardHeader>
                           <CardContent>
                             <p className="text-sm text-muted-foreground mb-3">
-                              {exam.mentorship}
+                              {exam.mentorshipOptions?.length
+                                ? exam.mentorshipOptions
+                                    .map((option) => option.type)
+                                    .join(" / ")
+                                : exam.mentorship || "No mentorship option"}
                             </p>
                             <p className="font-bold text-foreground">
                               {exam.examType.toLowerCase().includes("other")
                                 ? "Contact for details"
-                                : exam.sum != null
-                                  ? `${exam.sum.toLocaleString()} ETB`
-                                  : exam.basePrice != null
-                                    ? `${exam.basePrice.toLocaleString()} ETB`
-                                    : ""}
+                                : `${((exam.examPrice ?? exam.sum ?? 0) + (exam.examRoomService ?? 0)).toLocaleString()} ETB`}
                             </p>
                           </CardContent>
                         </Card>
@@ -226,63 +256,40 @@ const Booking = () => {
                       </CardContent>
                     </Card>
                   ) : (
-                    <>
-                      <Card className="mb-6">
-                        <CardContent className="p-6">
-                          <div className="flex items-start gap-4">
-                            <Checkbox
-                              id="mentorship"
-                              checked={wantsMentorship}
-                              onCheckedChange={(checked) =>
-                                setWantsMentorship(checked as boolean)
-                              }
-                            />
-                            <div className="flex-1">
-                              <label
-                                htmlFor="mentorship"
-                                className="font-display font-semibold text-foreground cursor-pointer"
-                              >
-                                Add Mentorship Program
-                              </label>
-                              <p className="text-sm text-muted-foreground mt-1">
-                                Get expert guidance and preparation tips from
-                                high scorers. Includes study materials and
-                                practice sessions.
-                              </p>
-                              <p className="text-secondary font-bold mt-2">
-                                +{" "}
-                                {(
-                                  selectedExamData?.mentorshipValue ?? 0
-                                ).toLocaleString()}{" "}
-                                ETB
-                              </p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
+                    <Card className="mb-6">
+                      <CardContent className="p-6 space-y-4">
+                        <div>
+                          <label className="block text-sm font-medium mb-2 text-foreground">
+                            Choose Mentorship Type
+                          </label>
+                          <select
+                            value={selectedMentorship}
+                            onChange={(event) => setSelectedMentorship(event.target.value)}
+                            className="w-full rounded-md border bg-background p-3 text-foreground"
+                          >
+                            {mentorshipOptions.length === 0 ? (
+                              <option value="">No mentorship available</option>
+                            ) : (
+                              mentorshipOptions.map((option) => (
+                                <option key={option.type} value={option.type}>
+                                  {option.type} - {option.value.toLocaleString()} ETB
+                                </option>
+                              ))
+                            )}
+                          </select>
+                        </div>
 
-                      <Card className="bg-muted">
-                        <CardContent className="p-6">
-                          <h3 className="font-display font-semibold text-foreground mb-4">
-                            Included Services:
-                          </h3>
-                          <ul className="space-y-2">
-                            <li className="flex items-center gap-2 text-foreground">
-                              <CheckCircle className="w-4 h-4 text-secondary" />
-                              Exam-based preparation
-                            </li>
-                            <li className="flex items-center gap-2 text-foreground">
-                              <CheckCircle className="w-4 h-4 text-secondary" />
-                              Professional Exam Environment
-                            </li>
-                            <li className="flex items-center gap-2 text-foreground">
-                              <CheckCircle className="w-4 h-4 text-secondary" />
-                              Technical Support
-                            </li>
-                          </ul>
-                        </CardContent>
-                      </Card>
-                    </>
+                        <div className="rounded-lg bg-muted p-4">
+                          <div className="text-sm text-muted-foreground">Selected package</div>
+                          <div className="font-semibold text-foreground">
+                            {selectedMentorship || "No mentorship selected"}
+                          </div>
+                          <div className="text-secondary font-bold mt-1">
+                            + {selectedMentorshipValue.toLocaleString()} ETB
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
                   )}
                 </div>
               )}
@@ -299,43 +306,32 @@ const Booking = () => {
                       <div className="space-y-3 mb-6">
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">
-                            {selectedExamData?.name} Exam
+                            {selectedExamData?.examType} Exam Price
                           </span>
                           <span className="text-foreground">
-                            {selectedExamData?.basePrice != null
-                              ? selectedExamData.basePrice.toLocaleString()
-                              : selectedExamData?.sum != null
-                                ? selectedExamData.sum.toLocaleString()
-                                : "0"}{" "}
-                            ETB{" "}
+                            {(selectedExamData?.examPrice ?? selectedExamData?.basePrice ?? selectedExamData?.sum ?? 0).toLocaleString()} ETB
                           </span>
                         </div>
-                        {wantsMentorship && (
-                          <div className="flex justify-between">
-                            <span className="text-muted-foreground">
-                              Mentorship Program
-                            </span>
-                            <span className="text-foreground">
-                              {(
-                                selectedExamData?.mentorshipValue ?? 0
-                              ).toLocaleString()}{" "}
-                              ETB
-                            </span>
-                          </div>
-                        )}
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">
                             Exam Room Service
                           </span>
-                          <span className="text-foreground">Included</span>
+                          <span className="text-foreground">
+                            {(selectedExamData?.examRoomService ?? 0).toLocaleString()} ETB
+                          </span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">
+                            {selectedMentorship || "Mentorship"}
+                          </span>
+                          <span className="text-foreground">
+                            {selectedMentorshipValue.toLocaleString()} ETB
+                          </span>
                         </div>
                         <div className="border-t border-border pt-3 flex justify-between font-bold">
                           <span className="text-foreground">Total</span>
                           <span className="text-secondary text-xl">
-                            {totalPrice != null
-                              ? totalPrice.toLocaleString()
-                              : "0"}{" "}
-                            ETB{" "}
+                            {totalPrice.toLocaleString()} ETB
                           </span>
                         </div>
                       </div>

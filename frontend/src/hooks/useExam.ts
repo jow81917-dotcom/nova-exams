@@ -16,10 +16,12 @@ export function useAddExam() {
   return useMutation({
     mutationFn: async (exam: {
       examType: string;
-      mentorship: string;
-      mentorshipValue: number;
+      mentorship?: string;
+      mentorshipValue?: number;
+      mentorshipOptions?: { type: string; value: number }[];
+      examPrice?: number;
       examRoomService: number;
-      sum: number;
+      sum?: number;
     }) => {
       const res = await api.post("/exams", exam);
       return res.data;
@@ -36,10 +38,12 @@ export function useUpdateExam() {
     mutationFn: async (exam: {
       id: string;
       examType: string;
-      mentorship: string;
-      mentorshipValue: number;
+      mentorship?: string;
+      mentorshipValue?: number;
+      mentorshipOptions?: { type: string; value: number }[];
+      examPrice?: number;
       examRoomService: number;
-      sum: number;
+      sum?: number;
     }) => {
       const res = await api.patch(`/exams/${exam.id}`, exam);
       return res.data;

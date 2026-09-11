@@ -8,14 +8,16 @@ datasource db {
 }
 
 model Exam {
-  id              String   @id @default(uuid())
-  examType        String
-  mentorship      String
-  mentorshipValue Int      @default(0)   
-  examRoomService Float
-  sum             Float
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String   @id @default(uuid())
+  examType          String
+  mentorship        String?
+  mentorshipValue   Int      @default(0)
+  mentorshipOptions Json?
+  examPrice         Float    @default(0)
+  examRoomService   Float    @default(0)
+  sum               Float    @default(0)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
 }
 
 model Testimonial {

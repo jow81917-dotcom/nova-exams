@@ -1,32 +1,79 @@
 const prisma = require("../prisma/client");
 
-exports.createExam = async (req, res) => {
-  const { examType, mentorship, mentorshipValue, examRoomService, sum } =
-    req.body;
+const normalizeMentorshipOptions = (raw, fallbackMentorship = "", fallbackValue = 0) => {
+  const parsed = Array.isArray(raw)
+    ? raw
+    : typeof raw === "string"
+      ? [raw]
+      : [];
 
-  if (
-    !examType ||
-    !mentorship ||
-    examRoomService === undefined ||
-    sum === undefined
-  ) {
-    return res.status(400).json({
-      success: false,
-      message: "All fields are required",
-    });
+  const options = parsed
+    .map((option, index) => {
+      if (typeof option === "string") {
+        return {
+          type: option || `Mentorship ${index + 1}`,
+          value: Number(fallbackValue || 0),
+        };
+      }
+
+      const type = String(option?.type || option?.name || option?.label || fallbackMentorship || `Mentorship ${index + 1}`).trim();
+      const value = Number(option?.value ?? option?.amount ?? option?.mentorshipValue ?? fallbackValue ?? 0);
+
+      if (!type && value === 0) {
+        return null;
+      }
+
+      return {
+        type: type || `Mentorship ${index + 1}`,
+        value: Number.isFinite(value) ? value : 0,
+      };
+    })
+    .filter(Boolean);
+
+  if (options.length > 0) {
+    return options;
   }
 
+  const legacyType = fallbackMentorship || "Mentorship";
+  const legacyValue = Number(fallbackValue || 0);
+
+  return legacyType ? [{ type: legacyType, value: legacyValue }] : [];
+};
+
+exports.createExam = async (req, res) => {
   try {
+    const examType = req.body.examType;
+    const examPrice = Number(req.body.examPrice ?? req.body.basePrice ?? 0);
+    const examRoomService = Number(req.body.examRoomService ?? 0);
+    const mentorshipOptions = normalizeMentorshipOptions(
+      req.body.mentorshipOptions,
+      req.body.mentorship,
+      req.body.mentorshipValue
+    );
+    const primaryMentorship = mentorshipOptions[0] || { type: "Mentorship", value: 0 };
+    const sum = Number(
+      req.body.sum ?? examPrice + examRoomService + (primaryMentorship.value || 0)
+    );
+
+    if (!examType || examRoomService === undefined || sum === undefined) {
+      return res.status(400).json({
+        success: false,
+        message: "Exam type and price fields are required",
+      });
+    }
+
     const exam = await prisma.exam.create({
       data: {
         examType,
-        mentorship,
-        mentorshipValue:
-          mentorshipValue !== undefined ? Number(mentorshipValue) : 0,
-        examRoomService: Number(examRoomService),
-        sum: Number(sum),
+        mentorship: primaryMentorship.type,
+        mentorshipValue: Number(primaryMentorship.value || 0),
+        mentorshipOptions,
+        examPrice,
+        examRoomService,
+        sum,
       },
     });
+
     res.status(201).json({
       success: true,
       message: "Exam created successfully",
@@ -86,17 +133,29 @@ exports.getExam = async (req, res) => {
 
 exports.updateExam = async (req, res) => {
   try {
+    const examType = req.body.examType;
+    const examPrice = Number(req.body.examPrice ?? req.body.basePrice ?? 0);
+    const examRoomService = Number(req.body.examRoomService ?? 0);
+    const mentorshipOptions = normalizeMentorshipOptions(
+      req.body.mentorshipOptions,
+      req.body.mentorship,
+      req.body.mentorshipValue
+    );
+    const primaryMentorship = mentorshipOptions[0] || { type: "Mentorship", value: 0 };
+    const sum = Number(
+      req.body.sum ?? examPrice + examRoomService + (primaryMentorship.value || 0)
+    );
+
     const exam = await prisma.exam.update({
       where: { id: req.params.id },
       data: {
-        examType: req.body.examType,
-        mentorship: req.body.mentorship,
-        mentorshipValue:
-          req.body.mentorshipValue !== undefined
-            ? Number(req.body.mentorshipValue)
-            : undefined,
-        examRoomService: Number(req.body.examRoomService),
-        sum: Number(req.body.sum),
+        examType,
+        mentorship: primaryMentorship.type,
+        mentorshipValue: Number(primaryMentorship.value || 0),
+        mentorshipOptions,
+        examPrice,
+        examRoomService,
+        sum,
       },
     });
 
