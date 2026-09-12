@@ -58,7 +58,7 @@ exports.loginAdmin = async (req, res) => {
       { expiresIn: "7d" }
     );
 
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NODE_ENV === "production" || /^https:\/\//i.test(process.env.FRONTEND_URL || "");
     res.cookie("adminToken", token, {
       httpOnly: true,
       secure: isProd,
@@ -108,7 +108,7 @@ exports.getSession = (req, res) => {
 
 exports.logoutAdmin = async (req, res) => {
   try {
-    const isProd = process.env.NODE_ENV === "production";
+    const isProd = process.env.NODE_ENV === "production" || /^https:\/\//i.test(process.env.FRONTEND_URL || "");
     res.clearCookie("adminToken", {
       httpOnly: true,
       secure: isProd,

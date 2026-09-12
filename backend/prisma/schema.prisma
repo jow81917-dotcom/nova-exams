@@ -16,6 +16,9 @@ model Exam {
   examPrice         Float    @default(0)
   examRoomService   Float    @default(0)
   sum               Float    @default(0)
+  bankName          String?
+  accountName       String?
+  accountNumber     String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @updatedAt
 }
@@ -74,5 +77,39 @@ model Admin {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model BookingSubmission {
+  id               String   @id @default(uuid())
+  fullName         String
+  phone            String
+  examType         String
+  mentorshipType   String?
+  totalAmount      Float?   @default(0)
+  receiptUrl       String
+  receiptPublicId  String?
+  status           String   @default("pending")
+  notes            String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model StudyAbroadOpportunity {
+  id            String   @id @default(uuid())
+  title         String
+  country       String
+  flag          String   @default("🌍")
+  category      String   @default("Scholarships")
+  funding       String   @default("Fully Funded")
+  fundingColor  String   @default("#D4A43A")
+  degree        String?
+  description   String
+  deadline      String?
+  daysLeft      Int?
+  eligibility   String?
+  featured      Boolean  @default(false)
+  isPublished   Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
 

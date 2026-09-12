@@ -25,9 +25,9 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-indigo-foreground/80 text-sm leading-relaxed">
-              Your trusted partner for international exam preparation and
-              booking services. We streamline your exam journey with expert
-              guidance.
+              Nova Exam Services facilitates end-to-end study abroad processes,
+              from finding the right opportunities to admissions support and
+              application guidance.
             </p>
           </div>
           <div>
@@ -98,11 +98,11 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-3 text-sm text-indigo-foreground/80">
                 <a
-                  href="tel:+251949700013"
+                  href="tel:0949700013"
                   className="flex items-center gap-2 hover:text-yellow-400 transition-colors"
                 >
                   <Phone className="w-4 h-4 text-primary" />
-                  <span>+251 949700013</span>
+                  <span>0949700013</span>
                 </a>
               </li>
               <li className="flex items-center gap-3 text-sm text-indigo-foreground/80">
@@ -113,7 +113,7 @@ export function Footer() {
                   className="flex items-center gap-2 hover:text-yellow-400 transition-colors"
                 >
                   <MapPin className="w-4 h-4 text-primary" />
-                  <span>Nur Plaza, Bethel Area, Addis Ababa</span>
+                  <span>Bethel, Nur building, Addis Ababa</span>
                 </a>
               </li>
             </ul>

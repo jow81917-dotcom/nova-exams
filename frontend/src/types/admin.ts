@@ -14,6 +14,9 @@ export interface Exam {
   examPrice?: number;
   examRoomService?: number;
   sum?: number;
+  bankName?: string | null;
+  accountName?: string | null;
+  accountNumber?: string | null;
 }
 
 export interface Testimonial {

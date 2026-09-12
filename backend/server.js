@@ -7,16 +7,21 @@ const adminRoutes = require("./routes/admin.routes");
 const teamRoutes = require("./routes/team.routes");
 const contactRoutes = require("./routes/contact.routes");
 const telegramRoutes = require("./routes/telegram.routes");
+const bookingSubmissionRoutes = require("./routes/bookingSubmission.routes");
+const studyAbroadRoutes = require("./routes/studyAbroad.routes");
 
 const allowedOrigins = [
   process.env.FRONTEND_URL,
   "http://localhost:3000",
   "http://localhost:5173",
   "http://127.0.0.1:3000",
-  "http://127.0.0.1:5173"
+  "http://127.0.0.1:5173",
+  "https://www.novaexams.com",
+  "https://novaexams.com"
 ].filter(Boolean);
 
 const express = require("express");
+const path = require("path");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const axios = require("axios");
@@ -25,6 +30,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(cors({
   origin: function (origin, callback) {
     if (
@@ -49,6 +55,8 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/team", teamRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/telegram", telegramRoutes);
+app.use("/api/booking-submissions", bookingSubmissionRoutes);
+app.use("/api/study-abroad", studyAbroadRoutes);
 
 app.get("/", (req, res) => {
   res.send("Service is alive!");

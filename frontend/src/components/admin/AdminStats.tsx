@@ -7,6 +7,7 @@ interface AdminStatsProps {
   blogPostsCount: number;
   resourcesCount: number;
   teamCount: number;
+  studyAbroadCount: number;
 }
 
 const AdminStats = ({
@@ -15,9 +16,10 @@ const AdminStats = ({
   blogPostsCount,
   resourcesCount,
   teamCount,
+  studyAbroadCount,
 }: AdminStatsProps) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-6 gap-6 mb-8">
       <Card className="bg-gradient-to-br from-primary/10 to-primary/5 border-primary/20">
         <CardHeader className="flex flex-row items-center justify-between pb-2">
           <CardTitle className="text-sm font-medium text-muted-foreground">
@@ -80,6 +82,18 @@ const AdminStats = ({
         </CardHeader>
         <CardContent>
           <div className="text-3xl font-bold text-foreground">{teamCount}</div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-gradient-to-br from-amber-100 to-amber-50 border-amber-200">
+        <CardHeader className="flex flex-row items-center justify-between pb-2">
+          <CardTitle className="text-sm font-medium text-muted-foreground">
+            Study Abroad
+          </CardTitle>
+          <Book className="h-5 w-5 text-amber-600" />
+        </CardHeader>
+        <CardContent>
+          <div className="text-3xl font-bold text-foreground">{studyAbroadCount}</div>
         </CardContent>
       </Card>
     </div>

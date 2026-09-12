@@ -1,7 +1,9 @@
 import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { motion, useInView } from "framer-motion";
+import { useStudyAbroadOpportunities } from "@/hooks/useStudyAbroad";
 import {
   Search,
   ArrowRight,
@@ -49,61 +51,15 @@ interface CountryCard {
 }
 
 // ─── Data ────────────────────────────────────────────────────────────────────
-const opportunities: Opportunity[] = [
-  {
-    id: 1,
-    flag: "🇮🇹",
-    country: "Italy",
-    title: "Italian Government Scholarship 2027",
-    funding: "Fully Funded",
-    fundingColor: "#22c55e",
-    degree: "Master's · PhD",
-    description:
-      "Tuition, accommodation, and monthly stipend fully covered for international students. Includes language courses and cultural activities.",
-    deadline: "May 15, 2027",
-    daysLeft: 270,
-    eligibility: "Ethiopian applicants eligible",
-    category: "Scholarship",
-  },
-  {
-    id: 2,
-    flag: "🇨🇳",
-    country: "China",
-    title: "Chinese Government Scholarship (CSC) 2027",
-    funding: "Fully Funded",
-    fundingColor: "#22c55e",
-    degree: "Bachelor's · Master's · PhD",
-    description:
-      "Full scholarship covering tuition, accommodation, living allowance, and comprehensive medical insurance for the duration of study.",
-    deadline: "March 31, 2027",
-    daysLeft: 225,
-    eligibility: "Open to African applicants",
-    category: "Scholarship",
-  },
-  {
-    id: 3,
-    flag: "🇹🇷",
-    country: "Turkey",
-    title: "Türkiye Bursları Scholarship 2027",
-    funding: "Fully Funded",
-    fundingColor: "#22c55e",
-    degree: "Bachelor's · Master's · PhD",
-    description:
-      "Covers tuition, housing, monthly stipend, health insurance, and one-year Turkish language course before the academic program.",
-    deadline: "February 20, 2027",
-    daysLeft: 186,
-    eligibility: "Ethiopian applicants eligible",
-    category: "Scholarship",
-  },
-];
-
-const deadlineItems = [
-  { title: "Italian Government Scholarship", country: "🇮🇹 Italy", days: 270, urgency: "normal" },
-  { title: "Türkiye Bursları Scholarship", country: "🇹🇷 Turkey", days: 186, urgency: "normal" },
-  { title: "CSC China Scholarship", country: "🇨🇳 China", days: 225, urgency: "normal" },
-  { title: "Russian Government Scholarship", country: "🇷🇺 Russia", days: 148, urgency: "soon" },
-  { title: "Erasmus+ Exchange Program", country: "🇪🇺 Europe", days: 90, urgency: "soon" },
-];
+const categoryOptions = [
+  { id: "universities", label: "Universities" },
+  { id: "self-funded", label: "Self-funded" },
+  { id: "scholarships", label: "Scholarships" },
+  { id: "grants", label: "Grants" },
+  { id: "summits", label: "Summits" },
+  { id: "work-abroad", label: "Work abroad" },
+  { id: "other-programs", label: "Other programs" },
+] as const;
 
 const countries: CountryCard[] = [
   { flag: "🇮🇹", name: "Italy", count: 12 },
@@ -145,26 +101,44 @@ const categories = [
   {
     icon: Award,
     label: "Scholarships",
-    desc: "Find funded study opportunities.",
+    desc: "Funded opportunities for study abroad.",
     id: "scholarships",
   },
   {
     icon: GraduationCap,
-    label: "University Admissions",
-    desc: "Explore universities and degree programs.",
+    label: "Universities",
+    desc: "Explore admissions and degree programs.",
     id: "universities",
   },
   {
     icon: Globe,
-    label: "International Programs",
-    desc: "Discover fellowships, exchanges, and other programs.",
-    id: "programs",
+    label: "Self-funded",
+    desc: "Private, direct-admission pathways.",
+    id: "self-funded",
+  },
+  {
+    icon: FileText,
+    label: "Grants",
+    desc: "Funding support and research aid.",
+    id: "grants",
+  },
+  {
+    icon: Calendar,
+    label: "Summits",
+    desc: "Events, showcases, and networking.",
+    id: "summits",
   },
   {
     icon: Briefcase,
-    label: "Work Abroad",
-    desc: "Explore international employment opportunities.",
-    id: "work",
+    label: "Work abroad",
+    desc: "Explore employment and global placements.",
+    id: "work-abroad",
+  },
+  {
+    icon: BookOpen,
+    label: "Other programs",
+    desc: "Exchange, research, and more opportunities.",
+    id: "other-programs",
   },
 ];
 
@@ -261,7 +235,7 @@ function FloatingContact() {
               <div>
                 <div className="text-xs text-[#B9B7C9]">Visit Us</div>
                 <div className="text-sm font-medium text-[#F7F7FA]">
-                  Bethel, Nur Plaza, 7th Floor
+                  Bethel, Nur building, Addis Ababa
                 </div>
               </div>
             </div>
@@ -288,7 +262,7 @@ function FloatingContact() {
 }
 
 // ─── Opportunity Card ─────────────────────────────────────────────────────────
-function OpportunityCard({ opp, delay }: { opp: Opportunity; delay: number }) {
+function OpportunityCard({ opp, delay, onSelect }: { opp: Opportunity; delay: number; onSelect: (opp: Opportunity) => void }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 24 }}
@@ -354,7 +328,11 @@ function OpportunityCard({ opp, delay }: { opp: Opportunity; delay: number }) {
       </div>
 
       {/* CTA */}
-      <button className="mt-auto flex items-center gap-2 text-sm font-semibold text-[#D4A43A] hover:text-[#E5B84A] transition-colors group/btn">
+      <button
+        type="button"
+        onClick={() => onSelect(opp)}
+        className="mt-auto flex items-center gap-2 text-sm font-semibold text-[#D4A43A] hover:text-[#E5B84A] transition-colors group/btn"
+      >
         View Details
         <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
       </button>
@@ -364,8 +342,56 @@ function OpportunityCard({ opp, delay }: { opp: Opportunity; delay: number }) {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 const StudyAbroad = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const { data: liveOpportunities = [], isLoading } = useStudyAbroadOpportunities();
+
+  const opportunities = liveOpportunities;
+
+  const handleBookConsultation = () => navigate("/booking");
+
+  const handleViewDetails = (opp: Opportunity) => {
+    const title = encodeURIComponent(opp.title || "Study abroad opportunity");
+    const country = encodeURIComponent(opp.country || "");
+    const category = encodeURIComponent(opp.category || "");
+    navigate(`/booking?source=study-abroad&title=${title}&country=${country}&category=${category}`);
+  };
+
+  const handleBrowseAll = () => {
+    setActiveCategory(null);
+    setSearchQuery("");
+    const listSection = document.getElementById("featured-opportunities");
+    if (listSection) {
+      listSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  const filteredOpportunities = opportunities.filter((opp) => {
+    const matchesSearch =
+      !searchQuery ||
+      opp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      opp.country.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      opp.description.toLowerCase().includes(searchQuery.toLowerCase());
+
+    const normalizedCategory = opp.category?.toLowerCase().trim();
+    const matchesCategory =
+      !activeCategory ||
+      normalizedCategory === activeCategory.toLowerCase() ||
+      normalizedCategory === activeCategory.toLowerCase().replace(/-/g, " ");
+
+    return matchesSearch && matchesCategory;
+  });
+
+  const deadlineItems = opportunities
+    .filter((opp) => opp.daysLeft !== null && opp.daysLeft !== undefined)
+    .slice(0, 5)
+    .map((opp) => ({
+      title: opp.title,
+      country: `${opp.flag || "🌍"} ${opp.country}`,
+      days: opp.daysLeft ?? 0,
+      urgency: (opp.daysLeft ?? 0) <= 90 ? "soon" : "normal",
+    }));
 
   // Decorative sparkles
   const sparkles = [
@@ -446,14 +472,7 @@ const StudyAbroad = () => {
               transition={{ duration: 0.6, delay: 0.15 }}
               className="font-display text-5xl md:text-6xl lg:text-7xl font-bold text-[#F7F7FA] mb-6 leading-tight"
             >
-              Study.{" "}
-              <span
-                className="bg-clip-text text-transparent"
-                style={{ backgroundImage: "linear-gradient(135deg, #D4A43A, #E5B84A)" }}
-              >
-                Work.
-              </span>{" "}
-              Go&nbsp;Global.
+              Studying Abroad Should Not Be Hard!
             </motion.h1>
 
             {/* Sub-headline */}
@@ -461,10 +480,9 @@ const StudyAbroad = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="text-lg md:text-xl text-[#B9B7C9] mb-12 max-w-2xl mx-auto leading-relaxed"
+              className="text-lg md:text-xl text-[#B9B7C9] mb-12 max-w-3xl mx-auto leading-relaxed"
             >
-              Discover scholarships, university programs, international fellowships, and
-              work-abroad opportunities — then let Nova guide your application.
+              Universities • Self-funded • Scholarships • Grants • Summits • Work abroad • Other programs
             </motion.p>
 
             {/* ── Search Bar ── */}
@@ -492,12 +510,31 @@ const StudyAbroad = () => {
                   className="flex-1 bg-transparent text-[#F7F7FA] placeholder-[#B9B7C9]/60 text-base outline-none py-2 min-w-0"
                 />
                 <button
+                  type="button"
+                  onClick={handleBookConsultation}
                   className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-[#090625] transition-all duration-200 hover:shadow-[0_0_20px_rgba(212,164,58,0.4)] hover:-translate-y-0.5 active:translate-y-0 flex-shrink-0"
                   style={{ background: "linear-gradient(135deg, #D4A43A, #B8922A)" }}
                 >
-                  Search <ArrowRight className="w-4 h-4" />
+                  Start your application with Nova Exam Services
                 </button>
               </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.55 }}
+              className="flex justify-center mb-10"
+            >
+              <button
+                type="button"
+                onClick={handleBookConsultation}
+                className="flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-[#090625] transition-all duration-200 hover:shadow-[0_0_20px_rgba(212,164,58,0.4)] hover:-translate-y-0.5 active:translate-y-0"
+                style={{ background: "linear-gradient(135deg, #D4A43A, #B8922A)" }}
+              >
+                Start your application with Nova Exam Services, book a consultation
+                <ArrowRight className="w-4 h-4" />
+              </button>
             </motion.div>
 
             {/* ── Category Buttons ── */}
@@ -593,7 +630,11 @@ const StudyAbroad = () => {
                     Featured Opportunities
                   </h2>
                 </div>
-                <button className="flex items-center gap-1.5 text-sm font-semibold text-[#D4A43A] hover:text-[#E5B84A] transition-colors group">
+                <button
+                  type="button"
+                  onClick={handleBrowseAll}
+                  className="flex items-center gap-1.5 text-sm font-semibold text-[#D4A43A] hover:text-[#E5B84A] transition-colors group"
+                >
                   View All
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -601,9 +642,15 @@ const StudyAbroad = () => {
             </FadeInSection>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {opportunities.map((opp, i) => (
-                <OpportunityCard key={opp.id} opp={opp} delay={i * 0.1} />
-              ))}
+              {isLoading ? (
+                <div className="col-span-full text-center text-[#B9B7C9] py-10">Loading opportunities...</div>
+              ) : filteredOpportunities.length === 0 ? (
+                <div className="col-span-full text-center text-[#B9B7C9] py-10">No opportunities match your search.</div>
+              ) : (
+                filteredOpportunities.map((opp, i) => (
+                  <OpportunityCard key={opp.id} opp={opp} delay={i * 0.1} onSelect={handleViewDetails} />
+                ))
+              )}
             </div>
           </div>
         </section>
@@ -636,7 +683,9 @@ const StudyAbroad = () => {
             </FadeInSection>
 
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {deadlineItems.map((item, i) => {
+              {deadlineItems.length === 0 ? (
+                <div className="col-span-full text-center text-[#B9B7C9] py-8">No deadlines available yet.</div>
+              ) : deadlineItems.map((item, i) => {
                 const isUrgent = item.urgency === "urgent";
                 const isSoon = item.urgency === "soon";
                 return (
@@ -728,7 +777,11 @@ const StudyAbroad = () => {
                     Explore by Country
                   </h2>
                 </div>
-                <button className="flex items-center gap-1.5 text-sm font-semibold text-[#D4A43A] hover:text-[#E5B84A] transition-colors group">
+                <button
+                  type="button"
+                  onClick={handleBrowseAll}
+                  className="flex items-center gap-1.5 text-sm font-semibold text-[#D4A43A] hover:text-[#E5B84A] transition-colors group"
+                >
                   View All Countries
                   <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </button>
@@ -738,7 +791,16 @@ const StudyAbroad = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
               {countries.map((c, i) => (
                 <motion.button
+                  type="button"
                   key={c.name}
+                  onClick={() => {
+                    setSearchQuery(c.name);
+                    setActiveCategory(null);
+                    const listSection = document.getElementById("featured-opportunities");
+                    if (listSection) {
+                      listSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                    }
+                  }}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}

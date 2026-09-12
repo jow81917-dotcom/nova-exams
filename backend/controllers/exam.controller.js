@@ -45,6 +45,9 @@ exports.createExam = async (req, res) => {
     const examType = req.body.examType;
     const examPrice = Number(req.body.examPrice ?? req.body.basePrice ?? 0);
     const examRoomService = Number(req.body.examRoomService ?? 0);
+    const bankName = req.body.bankName ? String(req.body.bankName).trim() : null;
+    const accountName = req.body.accountName ? String(req.body.accountName).trim() : null;
+    const accountNumber = req.body.accountNumber ? String(req.body.accountNumber).trim() : null;
     const mentorshipOptions = normalizeMentorshipOptions(
       req.body.mentorshipOptions,
       req.body.mentorship,
@@ -71,6 +74,9 @@ exports.createExam = async (req, res) => {
         examPrice,
         examRoomService,
         sum,
+        bankName,
+        accountName,
+        accountNumber,
       },
     });
 
@@ -136,6 +142,9 @@ exports.updateExam = async (req, res) => {
     const examType = req.body.examType;
     const examPrice = Number(req.body.examPrice ?? req.body.basePrice ?? 0);
     const examRoomService = Number(req.body.examRoomService ?? 0);
+    const bankName = req.body.bankName !== undefined ? (req.body.bankName ? String(req.body.bankName).trim() : null) : undefined;
+    const accountName = req.body.accountName !== undefined ? (req.body.accountName ? String(req.body.accountName).trim() : null) : undefined;
+    const accountNumber = req.body.accountNumber !== undefined ? (req.body.accountNumber ? String(req.body.accountNumber).trim() : null) : undefined;
     const mentorshipOptions = normalizeMentorshipOptions(
       req.body.mentorshipOptions,
       req.body.mentorship,
@@ -149,13 +158,16 @@ exports.updateExam = async (req, res) => {
     const exam = await prisma.exam.update({
       where: { id: req.params.id },
       data: {
-        examType,
+        ...(examType ? { examType } : {}),
         mentorship: primaryMentorship.type,
         mentorshipValue: Number(primaryMentorship.value || 0),
         mentorshipOptions,
         examPrice,
         examRoomService,
         sum,
+        ...(bankName !== undefined ? { bankName } : {}),
+        ...(accountName !== undefined ? { accountName } : {}),
+        ...(accountNumber !== undefined ? { accountNumber } : {}),
       },
     });
 

@@ -7,6 +7,8 @@ import TestimonialsSection from "../components/admin/TestimonialSection";
 import BlogPostsSection from "../components/admin/BlogPostsSection";
 import ResourcesSection from "../components/admin/ResourceSection";
 import TeamSection from "../components/admin/TeamSection";
+import StudyAbroadSection from "../components/admin/StudyAbroadSection";
+import { BookingSubmissionsSection } from "@/components/admin/BookingSubmissionsSection";
 
 import { useExams } from "../hooks/useExam";
 import { useTestimonials } from "@/hooks/useTestimonial";
@@ -15,6 +17,7 @@ import { useResources } from "@/hooks/useResources";
 import { useTeamMembers } from "@/hooks/useTeam";
 
 import { useLogout, useSession, useUpdateProfile } from "../hooks/useAuth";
+import { useStudyAbroadOpportunities } from "@/hooks/useStudyAbroad";
 import { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -35,6 +38,7 @@ const Admin = () => {
   const { data: blogPosts = [] } = useBlogPosts();
   const { data: resource = [] } = useResources();
   const { data: team = [] } = useTeamMembers();
+  const { data: studyAbroadOpportunities = [] } = useStudyAbroadOpportunities();
 
   const logout = useLogout();
   const { data: user } = useSession();
@@ -168,6 +172,7 @@ const Admin = () => {
             blogPostsCount={blogPosts.length}
             resourcesCount={resource.length}
             teamCount={team.length}
+            studyAbroadCount={studyAbroadOpportunities.length}
           />
           <Tabs defaultValue="exams" className="space-y-6">
             <TabsList className="bg-muted/50 p-1">
@@ -175,7 +180,9 @@ const Admin = () => {
               <TabsTrigger value="testimonials">Testimonials</TabsTrigger>
               <TabsTrigger value="blog">Blog Posts</TabsTrigger>
               <TabsTrigger value="resources">Resources</TabsTrigger>
-              <TabsTrigger value="team">Team Members</TabsTrigger>{" "}
+              <TabsTrigger value="team">Team Members</TabsTrigger>
+              <TabsTrigger value="study-abroad">Study Abroad</TabsTrigger>
+              <TabsTrigger value="booking">Booking Requests</TabsTrigger>
             </TabsList>
             <TabsContent value="exams">
               {isExamsLoading ? (
@@ -202,6 +209,12 @@ const Admin = () => {
 
             <TabsContent value="team">
               <TeamSection />
+            </TabsContent>
+            <TabsContent value="study-abroad">
+              <StudyAbroadSection />
+            </TabsContent>
+            <TabsContent value="booking">
+              <BookingSubmissionsSection />
             </TabsContent>
           </Tabs>
         </div>

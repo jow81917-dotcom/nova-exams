@@ -16,6 +16,7 @@ import { useExams } from "../hooks/useExam";
 import { ConsultationBooking } from "@/components/ConsultationBooking";
 import { ChatBot } from "@/components/ChatBot";
 import { TelegramButton } from "@/components/TelegramButton";
+import { BookingSubmissionForm } from "@/components/BookingSubmissionForm";
 
 export interface Exam {
   id: string;
@@ -29,6 +30,9 @@ export interface Exam {
   examRoomService?: number;
   basePrice?: number;
   sum?: number;
+  bankName?: string | null;
+  accountName?: string | null;
+  accountNumber?: string | null;
 }
 
 const Booking = () => {
@@ -36,6 +40,7 @@ const Booking = () => {
   const [selectedExam, setSelectedExam] = useState<string | null>(null);
   const [selectedMentorship, setSelectedMentorship] = useState<string>("");
   const [step, setStep] = useState(1);
+  const [showReceiptForm, setShowReceiptForm] = useState(false);
 
   const { data: exams, isLoading, isError } = useExams();
 
@@ -95,11 +100,8 @@ const Booking = () => {
     }
 
     if (step === 3) {
-      toast({
-        title: "Coming Soon",
-        description:
-          "Chapa payments will be available shortly. Until then, please reach us via Telegram, Email, or other services to complete your booking.",
-      });
+      setShowReceiptForm(true);
+      return;
     }
   };
 
@@ -293,7 +295,22 @@ const Booking = () => {
                   )}
                 </div>
               )}
-              {step === 3 && !isOthersExam && (
+              {showReceiptForm && selectedExamData && !isOthersExam ? (
+                <div className="max-w-2xl mx-auto">
+                  <BookingSubmissionForm
+                    examName={selectedExamData.examType}
+                    mentorshipType={selectedMentorship || undefined}
+                    totalAmount={totalPrice}
+                    onCancel={() => setShowReceiptForm(false)}
+                    onSuccess={() => {
+                      setShowReceiptForm(false);
+                      setStep(1);
+                      setSelectedExam(null);
+                      setSelectedMentorship("");
+                    }}
+                  />
+                </div>
+              ) : step === 3 && !isOthersExam ? (
                 <div className="max-w-lg mx-auto">
                   <h2 className="font-display text-2xl font-bold text-foreground mb-6 text-center">
                     Confirm & Pay
@@ -335,28 +352,47 @@ const Booking = () => {
                           </span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 p-4 bg-muted rounded-lg">
-                        <CreditCard className="w-6 h-6 text-secondary" />
-                        <div>
-                          <p className="font-medium text-foreground">
-                            Pay with Chapa
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            Secure payment processing
-                          </p>
+                      <div className="mt-4 rounded-lg border border-dashed border-secondary/40 bg-secondary/5 p-4">
+                        <div className="flex items-start gap-3">
+                          <CreditCard className="w-6 h-6 text-secondary mt-0.5" />
+                          <div className="w-full">
+                            <p className="font-medium text-foreground mb-2">
+                              Bank Transfer Details
+                            </p>
+                            <div className="space-y-2 text-sm text-muted-foreground">
+                              <div className="flex justify-between gap-4">
+                                <span>Bank Name</span>
+                                <span className="text-right font-medium text-foreground">
+                                  {selectedExamData?.bankName || "Not provided"}
+                                </span>
+                              </div>
+                              <div className="flex justify-between gap-4">
+                                <span>Account Name</span>
+                                <span className="text-right font-medium text-foreground">
+                                  {selectedExamData?.accountName || "Not provided"}
+                                </span>
+                              </div>
+                              <div className="flex justify-between gap-4">
+                                <span>Account Number</span>
+                                <span className="text-right font-medium text-foreground">
+                                  {selectedExamData?.accountNumber || "Not provided"}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </CardContent>
                   </Card>
                 </div>
-              )}
-              <div className="flex justify-between mt-8">
-                {step > 1 && (
-                  <Button variant="outline" onClick={() => setStep(step - 1)}>
-                    Back
-                  </Button>
-                )}
-                {!(step === 2 && isOthersExam) && (
+              ) : null}
+              {!showReceiptForm && !(step === 2 && isOthersExam) && (
+                <div className="flex justify-between mt-8">
+                  {step > 1 && (
+                    <Button variant="outline" onClick={() => setStep(step - 1)}>
+                      Back
+                    </Button>
+                  )}
                   <Button
                     variant="hero"
                     size="lg"
@@ -365,8 +401,8 @@ const Booking = () => {
                   >
                     {step === 3 ? "Proceed to Payment" : "Continue"}
                   </Button>
-                )}
-              </div>
+                </div>
+              )}
             </div>
           </div>
         </section>

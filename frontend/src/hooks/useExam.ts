@@ -22,6 +22,9 @@ export function useAddExam() {
       examPrice?: number;
       examRoomService: number;
       sum?: number;
+      bankName?: string | null;
+      accountName?: string | null;
+      accountNumber?: string | null;
     }) => {
       const res = await api.post("/exams", exam);
       return res.data;
@@ -44,6 +47,9 @@ export function useUpdateExam() {
       examPrice?: number;
       examRoomService: number;
       sum?: number;
+      bankName?: string | null;
+      accountName?: string | null;
+      accountNumber?: string | null;
     }) => {
       const res = await api.patch(`/exams/${exam.id}`, exam);
       return res.data;

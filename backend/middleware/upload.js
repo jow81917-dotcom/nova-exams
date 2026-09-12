@@ -26,6 +26,18 @@ const fileFilter = (req, file, cb) => {
     }
   }
 
+  else if (url.includes("booking") || url.includes("submission")) {
+    if (
+      file.mimetype.startsWith("image/") ||
+      file.mimetype === "application/pdf" ||
+      file.mimetype === "application/x-pdf"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  }
+
   else {
     cb(null, false);
   }

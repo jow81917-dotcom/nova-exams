@@ -138,6 +138,9 @@ const ExamsSection = () => {
       examPrice,
       examRoomService,
       sum: examPrice + examRoomService + defaultMentorship.value,
+      bankName: String(formData.get("bankName") || "").trim() || null,
+      accountName: String(formData.get("accountName") || "").trim() || null,
+      accountNumber: String(formData.get("accountNumber") || "").trim() || null,
     };
 
     try {
@@ -280,24 +283,56 @@ const ExamsSection = () => {
                   </div>
                 </div>
 
-                <div className="rounded-md border bg-muted/40 p-3 text-sm">
-                  <div className="font-medium text-neutral-dark">Estimated Total</div>
-                  <div className="text-lg font-semibold text-secondary">
-                    {(
-                      (Number(
-                        (
-                          document.getElementById("examPrice") as HTMLInputElement
-                        )?.value || 0
-                      ) || 0) +
-                      (Number(
-                        (
-                          document.getElementById("examRoomService") as HTMLInputElement
-                        )?.value || 0
-                      ) || 0) +
-                      (Number(
-                        mentorshipRows.find((row) => row.type.trim())?.value || 0
-                      ) || 0)
-                    ).toLocaleString()} ETB
+                <div className="space-y-3">
+                  <div className="rounded-md border bg-muted/40 p-3 text-sm">
+                    <div className="font-medium text-neutral-dark">Estimated Total</div>
+                    <div className="text-lg font-semibold text-secondary">
+                      {(
+                        (Number(
+                          (
+                            document.getElementById("examPrice") as HTMLInputElement
+                          )?.value || 0
+                        ) || 0) +
+                        (Number(
+                          (
+                            document.getElementById("examRoomService") as HTMLInputElement
+                          )?.value || 0
+                        ) || 0) +
+                        (Number(
+                          mentorshipRows.find((row) => row.type.trim())?.value || 0
+                        ) || 0)
+                      ).toLocaleString()} ETB
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="bankName">Bank Name</Label>
+                    <Input
+                      id="bankName"
+                      name="bankName"
+                      defaultValue={editingExam?.bankName ?? ""}
+                      placeholder="Commercial Bank of Ethiopia"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="accountName">Account Name</Label>
+                    <Input
+                      id="accountName"
+                      name="accountName"
+                      defaultValue={editingExam?.accountName ?? ""}
+                      placeholder="Nova Exams"
+                    />
+                  </div>
+
+                  <div className="space-y-2">
+                    <Label htmlFor="accountNumber">Account Number</Label>
+                    <Input
+                      id="accountNumber"
+                      name="accountNumber"
+                      defaultValue={editingExam?.accountNumber ?? ""}
+                      placeholder="1000000000000"
+                    />
                   </div>
                 </div>
 
