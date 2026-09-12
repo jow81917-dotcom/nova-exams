@@ -38,6 +38,15 @@ const partners = [
       "https://oneplanetschool.com/wp-content/uploads/2023/02/onelogo.webp",
     logoClassName: "bg-transparent object-contain",
   },
+  {
+    name: "Candidate to Startup Ethiopia (MInT)",
+    type: "Startup Ecosystem Partner",
+    description:
+      "A candidate program connecting entrepreneurs and innovators within the Startup Ethiopia (MInT) ecosystem.",
+    logo:
+      "https://shegastrpool.blob.core.windows.net/media-prod/media-prod/Screenshot_2025_12_29_101515_79c93d94a5.png",
+    logoClassName: "bg-transparent object-contain scale-[1.15]",
+  },
 ];
 
 export function ExamsSection() {
@@ -47,11 +56,11 @@ export function ExamsSection() {
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-14">
+        <div className="text-center max-w-4xl mx-auto mb-14">
           <span className="inline-block px-4 py-1 rounded-full bg-primary/20 text-primary font-medium text-sm mb-4">
             Our Trusted Partners
           </span>
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-indigo-foreground mb-4">
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-indigo-foreground mb-4 leading-tight">
             Working with recognized organizations to make international testing more accessible in Ethiopia.
           </h2>
         </div>
@@ -59,9 +68,9 @@ export function ExamsSection() {
         <div className="overflow-hidden">
           <motion.div
             className="flex w-max items-stretch gap-5"
-            animate={{ x: [0, -1420] }}
+            animate={{ x: [0, -1800] }}
             transition={{
-              duration: 28,
+              duration: 32,
               ease: "linear",
               repeat: Infinity,
             }}

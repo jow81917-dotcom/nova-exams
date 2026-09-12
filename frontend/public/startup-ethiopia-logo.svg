@@ -1,0 +1,35 @@
+<svg width="800" height="260" viewBox="0 0 800 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="startGradient" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%" stop-color="#12C67A"/>
+      <stop offset="55%" stop-color="#17B26A"/>
+      <stop offset="100%" stop-color="#F58A2A"/>
+    </linearGradient>
+  </defs>
+
+  <g>
+    <path d="M55 155C55 102.6 95.6 60 146 60C169 60 191.6 68.1 210.9 82.7C204.5 88.5 198.9 96.2 194.8 105.1C182.9 98.1 169.5 94.4 155.6 94.4C119 94.4 89.4 124 89.4 160.6C89.4 171.3 91.7 181.5 95.8 190.8C119 176.2 146.8 168.1 176.8 168.1C182 168.1 187.1 168.3 192.2 168.7C189.2 196.1 167.5 216 140.4 216C107.2 216 80 188.7 80 155.5C80 153.9 80.1 152.3 80.2 150.8C69.2 154.5 59.4 160.4 52.6 168.4C53.7 164 55 159.6 55 155Z" fill="#0E7788"/>
+    <path d="M121 76C135.5 62.4 154.1 54.9 174.4 54.9C195.5 54.9 214.8 63.6 229.3 78.6C223.9 96.3 209.7 110 192 120.5C176.3 109.5 151.5 109.5 133.6 117.4C122.6 102.8 117.8 90 121 76Z" fill="#1CB7A0"/>
+    <circle cx="137" cy="160" r="12" fill="#E9F9F7"/>
+    <circle cx="180" cy="144" r="12" fill="#E9F9F7"/>
+    <circle cx="164" cy="180" r="12" fill="#E9F9F7"/>
+    <circle cx="116" cy="132" r="10" fill="#E9F9F7"/>
+  </g>
+
+  <g>
+    <path d="M256 82L372 82L322 190L256 82Z" fill="#1AB49D" opacity="0.9"/>
+    <path d="M260 94L356 94L313 176L260 94Z" fill="#0F6390"/>
+    <text x="286" y="148" fill="#F8FAFC" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700">M</text>
+    <path d="M368 84H437V180H368V84Z" fill="#1AB49D" opacity="0.9"/>
+    <text x="420" y="150" fill="#0F6390" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800">inT</text>
+  </g>
+
+  <g>
+    <path d="M450 60L585 60L512 200L450 60Z" fill="url(#startGradient)"/>
+    <path d="M532 68L710 68L648 198H532L532 68Z" fill="#F2F2F2" opacity="0.9"/>
+    <path d="M515 107L575 87L626 125L636 140L590 170L531 149L515 107Z" fill="#0F6390"/>
+    <path d="M620 86L690 64L706 83L646 107L620 86Z" fill="#0F6390"/>
+    <text x="500" y="150" fill="#0F6390" font-family="Arial, Helvetica, sans-serif" font-size="110" font-weight="800" letter-spacing="-3">Startup</text>
+    <path d="M692 88L740 88L805 135L740 182L692 182L746 135L692 88Z" fill="#0F6390"/>
+  </g>
+</svg>
