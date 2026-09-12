@@ -1,0 +1,11 @@
+<svg width="800" height="260" viewBox="0 0 800 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g fill="#0D6FB8">
+    <circle cx="105" cy="88" r="33"/>
+    <circle cx="183" cy="88" r="33"/>
+    <circle cx="105" cy="166" r="33"/>
+    <circle cx="183" cy="166" r="33"/>
+  </g>
+
+  <text x="265" y="118" fill="#0D6FB8" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" letter-spacing="-1">BRITISH</text>
+  <text x="265" y="188" fill="#0D6FB8" font-family="Arial, Helvetica, sans-serif" font-size="62" font-weight="800" letter-spacing="-1">COUNCIL</text>
+</svg>

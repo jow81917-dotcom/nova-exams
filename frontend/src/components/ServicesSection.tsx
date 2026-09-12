@@ -10,36 +10,48 @@ const services = [
     title: "Exam Booking",
     description:
       "Book international exams including Duolingo, TOEFL, IELTS, TOLC, GRE, and GMAT with ease.",
+    href: "/booking",
+    cta: "Book Now",
   },
   {
     icon: Monitor,
     title: "Exam Room Service",
     description:
       "Fully equipped exam room service with reliable internet connection and power system.",
+    href: "/booking",
+    cta: "Book Room Service",
   },
   {
     icon: Users,
     title: "Mentorship Program",
     description:
       "Efficient Mentorship to guide you through your exam preparation journey.",
+    href: "/booking",
+    cta: "Get Mentorship",
   },
   {
     icon: Award,
     title: "Success Guarantee",
     description:
       "Our 98% success rate speaks for itself. Join thousands of successful students.",
+    href: "/booking",
+    cta: "Start Your Journey",
   },
   {
     icon: Clock,
     title: "Flexible Scheduling",
     description:
       "Choose exam dates that work best for you with our flexible booking system.",
+    href: "/booking",
+    cta: "Check Availability",
   },
   {
     icon: Shield,
     title: "Secure Process",
     description:
       "Safe and secure exam registration and payment processing with Chapa integration.",
+    href: "/booking",
+    cta: "Secure Booking",
   },
 ];
 
@@ -75,17 +87,21 @@ export function ServicesSection() {
               transition={{ duration: 0.6, delay: index * 0.15 }}
               viewport={{ once: true }}
             >
-              <Card className="group bg-card border-border shadow-sm hover:shadow-lg transition-shadow duration-300">
-                <CardContent className="p-6">
+              <Card className="group h-full bg-card border-border shadow-sm hover:shadow-lg transition-shadow duration-300">
+                <CardContent className="p-6 flex h-full flex-col">
                   <div className="w-12 h-12 rounded-xl bg-gradient-secondary flex items-center justify-center mb-4 shadow-sm">
                     <service.icon className="w-6 h-6 text-secondary-foreground" />
                   </div>
                   <h3 className="font-display font-semibold text-lg text-foreground mb-2">
                     {service.title}
                   </h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <p className="text-muted-foreground text-sm leading-relaxed flex-1">
                     {service.description}
                   </p>
+
+                  <Button variant="cta" size="sm" asChild className="mt-5 w-full">
+                    <Link to={service.href}>{service.cta}</Link>
+                  </Button>
                 </CardContent>
               </Card>
             </motion.div>

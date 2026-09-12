@@ -1,6 +1,5 @@
 import { ExamTicker } from "./ExamTicker";
-import { useState } from "react";
-import { X, ArrowRight, CheckCircle } from "lucide-react";
+import { ArrowRight, CheckCircle } from "lucide-react";
 import { WireframeMesh } from "./WireframeMesh";
 import { Link } from "react-router-dom";
 import { Button } from "../components/ui/button";
@@ -17,27 +16,6 @@ export function HeroSection() {
   return (
     <section className="relative min-h-screen w-full bg-hero overflow-hidden">
       <WireframeMesh />
-      <div className="sparkle-lg top-32 left-20 animate-sparkle">
-        <X className="w-4 h-4" strokeWidth={3} />
-      </div>
-      <div
-        className="sparkle-lg top-1/3 left-1/4 animate-sparkle"
-        style={{ animationDelay: "0.5s" }}
-      >
-        <span className="text-primary/40 text-2xl">✦</span>
-      </div>
-      <div
-        className="sparkle-lg top-2/3 left-16 animate-sparkle"
-        style={{ animationDelay: "1s" }}
-      >
-        <span className="text-teal/40 text-lg">+</span>
-      </div>
-      <div
-        className="sparkle-lg bottom-1/3 right-1/3 animate-sparkle"
-        style={{ animationDelay: "0.7s" }}
-      >
-        <span className="text-primary/50 text-xl">✦</span>
-      </div>
       <Navbar />
 
       <div className="container mx-auto px-4 pt-12 lg:pt-20 pb-32 lg:pb-40">
@@ -139,10 +117,6 @@ export function HeroSection() {
             {/* Decorative glow behind image */}
             <div className="absolute inset-4 rounded-[2rem] bg-primary/25 blur-3xl" />
             <div className="absolute inset-x-0 top-1/2 h-3/4 -translate-y-1/2 rounded-[2rem] border border-primary/20 bg-secondary/10 rotate-3" />
-
-            {/* Corner accents */}
-            <span className="absolute top-8 left-0 text-primary/60 text-4xl select-none">✦</span>
-            <span className="absolute bottom-8 right-0 text-primary/60 text-4xl select-none">✦</span>
 
             {/* Image frame */}
             <div className="group relative z-10 w-full max-w-[700px] aspect-[1200/630] rounded-[1.35rem] border-2 border-primary/60 bg-background/20 p-1.5 shadow-[0_0_55px_rgba(var(--primary-rgb),0.32)] transition-transform duration-500 hover:-translate-y-1">
